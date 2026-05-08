@@ -3,37 +3,54 @@ export interface AboutMe {
   title: string;
   institution: string;
   description: string;
+  interests?: string[];
+  biographyHighlights?: string[];
   email: string;
-  imageUrl?: string;
-  blogUrl?: string;
-  cvUrl?: string;
-  googleScholarUrl?: string;
+  imageURL?: string;
+  blogURL?: string;
+  cvURL?: string;
+  googleScholarURL?: string;
   twitterUsername?: string;
   githubUsername?: string;
   linkedinUsername?: string;
   funDescription?: string; // Gets placed in the left sidebar
   secretDescription?: string; // Gets placed in the bottom
   altName?: string;
-  institutionUrl?: string;
+  institutionURL?: string;
+  institutionAddress?: string;
+  laboratoryName?: string;
+  laboratoryURL?: string;
 }
 
 export const aboutMe: AboutMe = {
-  name: "Jane R. Smith",
-  title: "Ph.D. Candidate",
-  institution: "Stanford University",
-  // Note that links work in the description
+  imageURL: "/portrait.png",
+  name: "Takuro Kawada",
+  title: "M.S. student",
+  institution: "Hosei University",
+  institutionURL: "https://www.hosei.ac.jp/",
+  institutionAddress:
+    "S603, 3-7-2, Kajino-cho, Koganei-shi, Tokyo 184-8584, Japan",
+  laboratoryName: "Intelligent information processing laboratory",
+  laboratoryURL: "https://iyatomi-lab.info/english-top/",
+
+  email: "takuro.kawada@gmail.com",
+  googleScholarURL: "https://scholar.google.com/citations?user=Lb8EyWYAAAAJ",
+  githubUsername: "lychee1223",
+  linkedinUsername: "takuro-kawada-0355b43ab",
+  twitterUsername: "lychee1223_Lab",
+
   description:
-    "I'm a final-year <a href='https://www.stanford.edu'>PhD candidate</a> working at the intersection of causal inference and machine learning. My research focuses on developing robust, interpretable systems that can reason about cause and effect in complex environments.",
-  email: "______@stanford.edu",
-  imageUrl:
-    "https://images.unsplash.com/photo-1581481615985-ba4775734a9b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  googleScholarUrl: "https://scholar.google.com/citations?user=bWtMl_MAAAAJ",
-  githubUsername: "janesmith",
-  linkedinUsername: "janesmith",
-  twitterUsername: "janesmith",
-  blogUrl: "https://",
-  cvUrl: "https://",
-  institutionUrl: "https://www.stanford.edu",
-  // altName: "",
-  // secretDescription: "I like dogs.",
+    "Takuro Kawada (川田拓朗 in Japanese) is an M.S. student in the Intelligent Information Processing Laboratory at Hosei University, advised by Prof. Hitoshi Iyatomi. His current work centers on vision & language with a particular interest in building systems that make scientific communication and knowledge work more accessible, editable, and practical.",
+  interests: [
+    "Natural Language Processing",
+    "Computer Vision",
+    "AI for Science",
+    "Graphic Design Generation",
+    "Ancient Greece",
+  ],
+  biographyHighlights: [
+    "❤️ Loves research and development. He genuinely enjoys research life and likes spending time thinking through problems, refining ideas, and figuring out what makes a research direction interesting in the first place.",
+    "📝 Loves reading papers, implementing ideas, and turning rough concepts into actual systems. He is especially interested in generation, understanding, and human-in-the-loop editing for visually-rich documents and graphic design.",
+    "🏛️ A serious ancient Greece enthusiast outside the lab. He can happily spend hours thinking about Greek architecture, history, mythology, philosophy, and even the everyday lives of ordinary people in the ancient world.",
+  ],
 };

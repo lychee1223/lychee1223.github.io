@@ -1,39 +1,192 @@
-export interface Publication {
-  year: string;
-  conference: string;
-  title: string;
-  authors: string;
-  paperUrl?: string;
-  codeUrl?: string;
-  bibtex?: string;
-  tldr?: string;
-  imageUrl?: string;
-  award?: string;
+export interface PublicationResource {
+  label: string;
+  url: string;
 }
 
-export const publicationData: Publication[] = [
-  // If you don't want to show publications, just make the array empty.
-  {
-    year: "2024",
-    conference: "NeurIPS",
-    title: "Scalable Causal Discovery in High-Dimensional Time Series",
-    authors: "Jane Smith, Sarah Johnson, Yue Zhang",
-    paperUrl: "https://arxiv.org/abs/2409.15476",
-    codeUrl: "https://github.com/jsmith/scalable-causal-discovery",
-    //bibtex: "https://arxiv.org/abs/2409.15476.bib",
-    tldr: "Using causal discovery to find the causal structure of high-dimensional time series data.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1561622539-dffbfc2008fd?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    award: "🏆 Best Paper Award",
-    // if you have an image in public/images, you can use it like this:
-    // imageUrl: "/images/publication-image.jpg"
-  },
-  {
-    year: "2023",
-    conference: "ICML",
-    title: "Robust Causal Discovery Under Distribution Shift",
-    authors: "Jane Smith, Xue Chen, Sarah Johnson",
-    paperUrl: "https://arxiv.org/abs/2302.13095",
-    codeUrl: "https://github.com/jsmith/robust-causal-discovery",
-  },
+export interface PublicationAuthor {
+  name: string;
+  equalContribution?: boolean;
+}
+
+export type PublicationCategory =
+  | "international-conference"
+  | "domestic-conference"
+  | "article"
+  | "talk";
+
+export interface Publication {
+  slug: string;
+  title: string;
+  authors?: PublicationAuthor[];
+  date: string;
+  category: PublicationCategory;
+  venueFull?: string;
+  venueShort?: string;
+  venueURL?: string;
+  keywords?: string[];
+  awards?: string[];
+  abstract?: string;
+  resources?: PublicationResource[];
+}
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
+
+type DataFileModule<T> = {
+  default?: T;
+} & Record<string, unknown>;
+
+type DataFileContext<T> = {
+  keys(): string[];
+  (id: string): DataFileModule<T>;
+};
+
+declare const require: {
+  context<T>(
+    directory: string,
+    useSubdirectories?: boolean,
+    regExp?: RegExp,
+  ): DataFileContext<T>;
+};
+
+function getDataFileExport<T extends object>(module: DataFileModule<T>) {
+  if (module.default) {
+    return module.default;
+  }
+
+  const namedExport = Object.values(module).find(
+    (value): value is T => typeof value === "object" && value !== null,
+  );
+
+  if (!namedExport) {
+    throw new Error("Data file must export an object.");
+  }
+
+  return namedExport;
+}
+
+const publicationFileContext = require.context<Publication>(
+  "./publications",
+  true,
+  /\.ts$/,
+);
+
+export const publicationData: Publication[] = publicationFileContext
+  .keys()
+  .map((key) => getDataFileExport(publicationFileContext(key)));
+
+function getPublicationSortValue(publication: Publication) {
+  const normalizedDate = Number(publication.date.replaceAll("-", ""));
+
+  return Number.isNaN(normalizedDate) ? 0 : normalizedDate;
+}
+
+export function sortPublications(publications: Publication[]) {
+  return [...publications].sort(
+    (left, right) =>
+      getPublicationSortValue(right) - getPublicationSortValue(left),
+  );
+}
+
+export const sortedPublicationData = sortPublications(publicationData);
+
+export const internationalConferencePublications = sortedPublicationData.filter(
+  (publication) => publication.category === "international-conference",
+);
+
+export const domesticConferencePublications = sortedPublicationData.filter(
+  (publication) => publication.category === "domestic-conference",
+);
+
+export const materialPublications = sortedPublicationData.filter(
+  (publication) =>
+    publication.category === "article" || publication.category === "talk",
+);
+
+export function getPublicationBySlug(slug: string) {
+  return publicationData.find((publication) => publication.slug === slug);
+}
+
+export function getPublicationVenueLabel(publication: Publication) {
+  if (!publication.venueFull && !publication.venueShort) {
+    return null;
+  }
+
+  if (!publication.venueFull) {
+    return publication.venueShort ?? null;
+  }
+
+  if (
+    !publication.venueShort ||
+    publication.venueFull === publication.venueShort
+  ) {
+    return publication.venueFull;
+  }
+
+  return `${publication.venueFull} (${publication.venueShort})`;
+}
+
+export function getPublicationVenuePrefix(publication: Publication) {
+  switch (publication.category) {
+    case "article":
+      return "Article:";
+    case "talk":
+      return "Event:";
+    default:
+      return "Publication:";
+  }
+}
+
+export function getPublicationListVenueLabel(publication: Publication) {
+  return (
+    publication.venueShort ??
+    publication.venueFull ??
+    getPublicationCategoryLabel(publication)
+  );
+}
+
+export function getPublicationCategoryLabel(publication: Publication) {
+  switch (publication.category) {
+    case "international-conference":
+      return "International Conferences";
+    case "domestic-conference":
+      return "Domestic Conferences";
+    case "article":
+      return "Articles";
+    case "talk":
+      return "Talks";
+  }
+}
+
+export function formatPublicationDate(date?: string) {
+  if (!date) {
+    return null;
+  }
+
+  const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if (!match) {
+    return date;
+  }
+
+  const [, year, month] = match;
+  const monthIndex = Number(month) - 1;
+
+  if (monthIndex < 0 || monthIndex >= monthNames.length) {
+    return date;
+  }
+
+  return `${monthNames[monthIndex]} ${year}`;
+}

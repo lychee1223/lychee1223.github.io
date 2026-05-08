@@ -1,115 +1,185 @@
-# research-website-template
+# Personal Website
 
-This is a React + Next.js template meant for research websites. See a [demo of the template here](https://tovacinni.github.io/research-website-template/). My own [personal website](https://tovacinni.github.io) is also built with the same template.
+Next.js 15 / React 19 / Tailwind CSS で作っているポートフォリオサイト
 
-In practice it could probably be used by anyone.
+## Setup
 
-It is meant to be customizeable, all through modifying the `src/data` - which have arrays of objects that are used to generate the website.
-
-For example, `src/data/publication.ts` contains an array like:
-
-```typescript
-export const publicationData: Publication[] = [
-  {
-    year: "2023",
-    conference: "International Conference on Machine Learning (ICML)",
-    title: "Robust Causal Discovery Under Distribution Shift",
-    authors: "Jane Smith, Xue Chen, Sarah Johnson",
-    paperUrl: "https://arxiv.org/abs/2302.13095",
-    codeUrl: "https://github.com/jsmith/robust-causal-discovery",
-  },
-];
-```
-
-To update your website, you can simply add objects to the array.
-
-The schemas are defined in the same files, and many fields are optional for flexibility:
-
-```typescript
-export interface Publication {
-  year: string;
-  conference: string;
-  title: string;
-  authors: string;
-  paperUrl?: string;
-  codeUrl?: string;
-  bibtex?: string;
-  tldr?: string;
-  imageUrl?: string;
-  award?: string;
-}
-```
-
-Any field with a `?` at the end is optional. Filling them in will create the UI components corresponding to them automatically.
-
-You can also change the order of the sections in `src/data/section-order.ts`, and if you want full customization you can just edit the React components in `src/components`.
-
-This project was birthed from annoyance over HTML + CSS templates- such as the very popular [Jon Barron template](https://github.com/jonbarron/website). The Jon Barron template is amazing because it is simple & complete which is why it's so popular- but over time, maintenance becomes difficult from the amount of duplicate code it creates (the Jon Barron index is now over 4000 lines of code). This is meant to be a much more minimal (to maintain) alternative (and was a good way to spend a few hours to build over holiday weekend).
-
-## Prerequisites
-
-First, install Node.js and npm through the [Node.js official website](https://nodejs.org/).
-
-Verify installation by running:
+依存関係をインストールして開発サーバを起動し, ブラウザで `http://localhost:3000` を確認
 
 ```bash
-node --version
-npm --version
+npm install
+npm run dev
 ```
 
-## Installation
+ビルド
 
-1. Fork the repository
+```bash
+npm run build
+```
 
-2. Clone the repository
+リント
 
-   ```bash
-   git clone [your-repository-url]
-   cd [repository-name]
-   ```
+```bash
+npm run lint
+npm run lint:fix
+npm run format
+```
 
-3. Install dependencies
+## Project Structure
 
-   Inside the repository, run:
+主要なファイル構成は以下の通り
 
-   ```bash
-   npm install
-   ```
+```text
+src/
+  app/
+    page.tsx
+    layout.tsx
+    globals.css
+    publications/
+      page.tsx
+      [slug]/
+        page.tsx
+  components/
+    home/
+    layout/
+    navigation/
+    publications/
+  data/
+    aboutme.ts
+    experience.ts
+    experiences/
+      <slug>.ts
+    publication.ts
+    publications/
+      <category>/
+        <slug>/
+          metadata.ts
+          content.md
+    section-order.ts
+    title-description.ts
+public/
+  portrait.png
+  publications/
+    <slug>/
+      paper.pdf
+      poster.pdf
+      slides.pdf
+```
 
-## Running the Application
+## 更新手順
 
-1. To start the development server, run (in the repository directory):
+### プロフィールを変更する
 
-   ```bash
-   npm run dev
-   ```
+1. プロフィール情報を `src/data/aboutme.ts` に記述
 
-2. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Column                | Type       | Required | Description                                                                |
+| --------------------- | ---------- | -------- | -------------------------------------------------------------------------- |
+| `name`                | `string`   | yes      | 氏名                                                                       |
+| `title`               | `string`   | yes      | 現在の肩書き                                                               |
+| `institution`         | `string`   | yes      | 所属機関名                                                                 |
+| `institutionURL`      | `string`   | no       | 所属機関の HP の URL                                                       |
+| `institutionAddress`  | `string`   | no       | 所属機関の住所                                                             |
+| `laboratoryName`      | `string`   | no       | 研究室名                                                                   |
+| `laboratoryURL`       | `string`   | no       | 研究室の HP の URL                                                         |
+| `email`               | `string`   | yes      | メールアドレス                                                             |
+| `googleScholarURL`    | `string`   | no       | Google Scholar の URL                                                      |
+| `githubUsername`      | `string`   | no       | GitHub のユーザー名                                                        |
+| `linkedinUsername`    | `string`   | no       | LinkedIn のユーザー名                                                      |
+| `twitterUsername`     | `string`   | no       | X / Twitter のユーザー名                                                   |
+| `description`         | `string`   | yes      | Biography セクションに表示する自己紹介文                                   |
+| `interests`           | `string[]` | no       | Biography セクションの Interests に表示する研究関心などのリスト            |
+| `biographyHighlights` | `string[]` | no       | Biography セクションの Personality Traits に表示する補足説明. 先頭は絵文字 |
 
-## Deploying onto GitHub Pages
+### Publication を追加する
 
-1. Fork or clone this repo and push to your own repository at `[your-github-username].github.io`.
+1. Publication データを `src/data/publications/<category>/<slug>/metadata.ts` に記述
+2. 詳細ページへ追記したい本文を `content.md` に記述
+3. PDF などの静的ファイルを `public/publications/<slug>/` に配置
 
-2. In your repository settings, ensure the repository name matches `[your-github-username].github.io` if you want it to be your main GitHub Pages site.
+Publication の主なカラムは以下の通り
 
-3. Push your changes to the main branch.
+| Column       | Type                    | Required | Description                                   |
+| ------------ | ----------------------- | -------- | --------------------------------------------- |
+| `slug`       | `string`                | yes      | 詳細ページURLと静的ファイル配置に使う一意なID |
+| `title`      | `string`                | yes      | タイトル                                      |
+| `authors`    | `PublicationAuthor[]`   | no       | 著者. `equalContribution` も指定可能          |
+| `date`       | `string`                | yes      | `YYYY-MM-DD` 形式の日付                       |
+| `category`   | `PublicationCategory`   | yes      | カテゴリ                                      |
+| `venueFull`  | `string`                | no       | 会議名やイベント名の正式名称                  |
+| `venueShort` | `string`                | no       | 会議名やイベント名の短縮表記                  |
+| `venueURL`   | `string`                | no       | 会議やイベントの URL                          |
+| `keywords`   | `string[]`              | no       | キーワード                                    |
+| `awards`     | `string[]`              | no       | 受賞情報                                      |
+| `abstract`   | `string`                | no       | 概要                                          |
+| `resources`  | `PublicationResource[]` | no       | Paper、Poster、Slides などのリンク            |
 
-4. Go to the GitHub page for your repository and go to `Settings` then `Pages`. If you set Source to be `GitHub Actions`, it should suggest you a build script for Next.js.
+`category` に指定できる値は以下の通り
 
-5. Commit the build script and see things building.
+| Value                      | Description |
+| -------------------------- | ----------- |
+| `international-conference` | 国際会議    |
+| `domestic-conference`      | 国内会議    |
+| `article`                  | 記事        |
+| `talk`                     | 登壇/講演   |
 
-Your site should now be live at `https://[your-github-username].github.io/`.
+例:
 
-## Deploying to your own domain
+```typescript
+import type { Publication } from "@/data/publication";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/) from the creators of Next.js.
+export const kawada2026sciga: Publication = {
+  slug: "kawada2026sciga",
+  title: "SciGA: A Comprehensive ...",
+  authors: [
+    { name: "Takuro Kawada", equalContribution: true },
+    { name: "Shunsuke Kitada", equalContribution: true },
+    { name: "Sota Nemoto" },
+    { name: "Hitoshi Iyatomi" },
+  ],
+  date: "2026-06-03",
+  category: "international-conference",
+  venueFull: "the 2026 IEEE/CVF ...",
+  venueShort: "CVPRF 2026",
+  venueURL: "https://...",
+  keywords: ["Natural Language Processing", ...],
+  abstract: "Graphical Abstracts (GAs) play ...",
+  resources: [
+    {
+      label: "arXiv",
+      url: "https://arxiv.org/abs/2507.02212",
+    },
+    ...
+  ],
+};
+```
 
-1. Create a [Vercel account](https://vercel.com/signup) if you haven't already
-2. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
-3. Import your repository on Vercel
-4. Vercel will automatically detect Next.js and configure the build settings
-5. Click "Deploy"
+### Experience を追加する
 
-## Contributing
+1. Experience データを `src/data//experiences/<slug>.ts` に記述
 
-Feel free to drop a pull request whenever!
+Experience の主なカラムは以下の通り
+
+| Column            | Type       | Required | Description                                                     |
+| ----------------- | ---------- | -------- | --------------------------------------------------------------- |
+| `slug`            | `string`   | yes      | 一意なID。                                                      |
+| `start`           | `string`   | yes      | 開始年月。`YYYY` または `YYYY-MM` 形式を想定しています。        |
+| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示されます。             |
+| `organization`    | `string`   | yes      | 大学、企業、組織名。                                            |
+| `organizationURL` | `string`   | no       | 組織へのリンクURL。                                             |
+| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示されます。 |
+| `meta`            | `string[]` | no       | 補足メタ情報。複数ある場合は `/` 区切りで表示されます。         |
+
+例:
+
+```typescript
+import type { ExperienceItem } from "@/data/experience";
+
+export const hosei2025master: ExperienceItem = {
+  slug: "hosei2025master",
+  start: "2025",
+  organization: "Hosei University",
+  organizationURL: "https://www.hosei.ac.jp/",
+  titles: ["M.Eng. Student"],
+  meta: ["Advisor: Prof. Hitoshi Iyatomi"],
+};
+```
