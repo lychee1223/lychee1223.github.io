@@ -11,10 +11,7 @@ export const kawada2024kantocv: Publication = {
   keywords: ["Vision & Language", "Paper Reading"],
   abstract:
     "第62回 コンピュータビジョン勉強会 ＠ 関東 での登壇資料. ECCV 2024 に採択された Zhang らの論文 [Long-CLIP: Unlocking the Long-Text Capability of CLIP](https://arxiv.org/abs/2403.15378) を紹介します.",
-  resources: [
-    {
-      label: "SpeakerDeck",
-      url: "https://speakerdeck.com/lychee1223/kantocv-62th-eccv-2024",
-    },
-  ],
+  relatedLinks: {
+    SpeakerDeck: "https://speakerdeck.com/lychee1223/kantocv-62th-eccv-2024",
+  },
 };

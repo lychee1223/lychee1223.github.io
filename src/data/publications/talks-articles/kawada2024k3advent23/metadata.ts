@@ -10,10 +10,7 @@ export const kawada2024k3advent23: Publication = {
   keywords: ["Advent Calendar", "Paper Reading"],
   abstract:
     "K3 Advent Calendar 2024 の 23 日目の記事. これから研究を始める方に向け, 論文を効率的に探す方法や論文を読む際のポイントについて解説しています.",
-  resources: [
-    {
-      label: "Article",
-      url: "https://qiita.com/lychee1223_Lab/items/5732fc398ecbc14dbabd",
-    },
-  ],
+  relatedLinks: {
+    Article: "https://qiita.com/lychee1223_Lab/items/5732fc398ecbc14dbabd",
+  },
 };

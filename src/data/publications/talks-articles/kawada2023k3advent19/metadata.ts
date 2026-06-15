@@ -10,10 +10,7 @@ export const kawada2023k3advent19: Publication = {
   keywords: ["Advent Calendar", "Natural Language Processing"],
   abstract:
     "K3 Advent Calendar 2023 の 19 日目の記事. 2023/12/19にリリースされたLLM「Swallow」を触って遊んでみた内容をまとめています.",
-  resources: [
-    {
-      label: "Article",
-      url: "https://qiita.com/lychee1223_Lab/items/54c6c1daacaba18c77d8",
-    },
-  ],
+  relatedLinks: {
+    Article: "https://qiita.com/lychee1223_Lab/items/54c6c1daacaba18c77d8",
+  },
 };

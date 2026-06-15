@@ -10,10 +10,7 @@ export const kawada2024hoseiadvent16: Publication = {
   keywords: ["Advent Calendar", "Ancient Greece"],
   abstract:
     "法政大学理工学部 Advent Calendar 2024 の 16 日目の記事. ギリシャ神話の物語を古典ギリシア語で読み解き, その魅力を紹介しています.",
-  resources: [
-    {
-      label: "Article",
-      url: "https://hackmd.io/@lychee1223/Odyssey",
-    },
-  ],
+  relatedLinks: {
+    Article: "https://hackmd.io/@lychee1223/Odyssey",
+  },
 };

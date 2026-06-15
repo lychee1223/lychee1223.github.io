@@ -1,7 +1,36 @@
-export interface PublicationResource {
+export const relatedLinkKeys = [
+  "ProjectPage",
+  "arXiv",
+  "Paper",
+  "Slides",
+  "Poster",
+  "Code",
+  "Dataset",
+  "Article",
+  "SpeakerDeck",
+] as const;
+
+export type RelatedLinkKey = (typeof relatedLinkKeys)[number];
+
+export const relatedLinkText: Record<RelatedLinkKey, string> = {
+  ProjectPage: "Project Page",
+  arXiv: "arXiv",
+  Paper: "Paper",
+  Slides: "Slides",
+  Poster: "Poster",
+  Code: "Code",
+  Dataset: "Dataset",
+  Article: "Article",
+  SpeakerDeck: "Speaker Deck",
+};
+
+export interface RelatedLink {
+  key: RelatedLinkKey;
   label: string;
   url: string;
 }
+
+export type RelatedLinks = Partial<Record<RelatedLinkKey, string>>;
 
 export interface PublicationAuthor {
   name: string;
@@ -26,7 +55,7 @@ export interface Publication {
   keywords?: string[];
   awards?: string[];
   abstract?: string;
-  resources?: PublicationResource[];
+  relatedLinks?: RelatedLinks;
 }
 
 const monthNames = [
@@ -110,9 +139,12 @@ export const domesticConferencePublications = sortedPublicationData.filter(
   (publication) => publication.category === "domestic-conference",
 );
 
-export const materialPublications = sortedPublicationData.filter(
-  (publication) =>
-    publication.category === "article" || publication.category === "talk",
+export function isTalkOrArticle(publication: Publication) {
+  return publication.category === "article" || publication.category === "talk";
+}
+
+export const talkArticlePublications = sortedPublicationData.filter(
+  isTalkOrArticle,
 );
 
 export function getPublicationBySlug(slug: string) {
@@ -168,6 +200,20 @@ export function getPublicationCategoryLabel(publication: Publication) {
     case "talk":
       return "Talks";
   }
+}
+
+export function getRelatedLinks(
+  publication: Publication,
+): RelatedLink[] {
+  if (!publication.relatedLinks) {
+    return [];
+  }
+
+  return relatedLinkKeys.flatMap((key) => {
+    const url = publication.relatedLinks?.[key];
+
+    return url ? [{ key, label: relatedLinkText[key], url }] : [];
+  });
 }
 
 export function formatPublicationDate(date?: string) {

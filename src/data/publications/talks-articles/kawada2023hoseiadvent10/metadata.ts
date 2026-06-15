@@ -10,10 +10,7 @@ export const kawada2023hoseiadvent10: Publication = {
   keywords: ["Advent Calendar", "Ancient Greece"],
   abstract:
     "法政大学理工学部 Advent Calendar 2023 の 10 日目の記事. 古代ギリシアで食された歴史メシを再現レシピとともに紹介しています.",
-  resources: [
-    {
-      label: "Article",
-      url: "https://hackmd.io/@lychee1223/AncientGreekGourmet",
-    },
-  ],
+  relatedLinks: {
+    Article: "https://hackmd.io/@lychee1223/AncientGreekGourmet",
+  },
 };

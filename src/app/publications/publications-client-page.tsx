@@ -2,8 +2,16 @@
 
 import { PublicationEntry } from "@/components/publications/publication-entry";
 import { getAuthors } from "@/components/publications/render-authors";
-import { sortedPublicationData } from "@/data/publication";
+import { isTalkOrArticle, sortedPublicationData } from "@/data/publication";
 import { useSearchParams } from "next/navigation";
+
+type PublicationFilterCategory =
+  | "international-conference"
+  | "domestic-conference"
+  | "article"
+  | "talk"
+  | "talks-articles"
+  | "material";
 
 function getCategoryParam(value: string | null) {
   if (
@@ -11,9 +19,10 @@ function getCategoryParam(value: string | null) {
     value === "domestic-conference" ||
     value === "article" ||
     value === "talk" ||
+    value === "talks-articles" ||
     value === "material"
   ) {
-    return value;
+    return value satisfies PublicationFilterCategory;
   }
 
   return undefined;
@@ -24,6 +33,8 @@ export function PublicationsClientPage() {
   const author = searchParams.get("author") ?? undefined;
   const category = getCategoryParam(searchParams.get("category"));
   const keyword = searchParams.get("keyword") ?? undefined;
+  const isTalkArticleFilter =
+    category === "talks-articles" || category === "material";
 
   const filteredPublications = sortedPublicationData.filter((publication) => {
     if (author) {
@@ -33,10 +44,8 @@ export function PublicationsClientPage() {
     }
 
     if (category) {
-      if (category === "material") {
-        return (
-          publication.category === "article" || publication.category === "talk"
-        );
+      if (isTalkArticleFilter) {
+        return isTalkOrArticle(publication);
       }
 
       return publication.category === category;
@@ -59,7 +68,7 @@ export function PublicationsClientPage() {
           ? "Category: Articles"
           : category === "talk"
             ? "Category: Talks"
-            : category === "material"
+            : isTalkArticleFilter
               ? "Category: Talks & Articles"
               : keyword
                 ? `Keyword: ${keyword}`

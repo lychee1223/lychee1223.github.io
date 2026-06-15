@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { AwardBadge } from "@/components/publications/award-badge";
 import {
   formatPublicationDate,
+  getRelatedLinks,
   getPublicationVenueLabel,
   getPublicationVenuePrefix,
   getPublicationBySlug,
@@ -47,7 +48,7 @@ export default async function PublicationPage({
     notFound();
   }
 
-  const relatedLinks = publication.resources ?? [];
+  const relatedLinks = getRelatedLinks(publication);
   const publicationContent = getPublicationContentBySlug(publication.slug);
   const venueLabel = getPublicationVenueLabel(publication);
   const venuePrefix = getPublicationVenuePrefix(publication);
@@ -140,10 +141,10 @@ export default async function PublicationPage({
           {relatedLinks.length > 0 && (
             <section className="mb-12">
               <div className="flex flex-wrap gap-3">
-                {relatedLinks.map((resource) => (
+                {relatedLinks.map((link) => (
                   <a
-                    key={`${resource.label}-${resource.url}`}
-                    href={resource.url}
+                    key={`${link.key}-${link.url}`}
+                    href={link.url}
                     className="group inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/90 px-3 py-1.5 text-xs font-medium text-blue-800 transition-colors duration-300 hover:bg-blue-100 hover:text-blue-950"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -152,7 +153,7 @@ export default async function PublicationPage({
                       size={12}
                       className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
                     />
-                    <span className="tracking-wider">{resource.label}</span>
+                    <span className="tracking-wider">{link.label}</span>
                   </a>
                 ))}
               </div>

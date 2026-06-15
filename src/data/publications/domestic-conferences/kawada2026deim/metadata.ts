@@ -24,18 +24,9 @@ export const kawada2026deim: Publication = {
   awards: ["Student Presentation Award"],
   abstract:
     "コーチングとは, 観測された行動を参照基準と比較し, その差分に基づいて改善を促す教育的支援である. 動画に基づくコーチングの既存研究の多くは, 学習者の動画に対してお手本動画を参照基準としてきたが, 高品質なお手本動画を大規模に用意することは困難である. 本研究では, 教本などのドキュメントを参照基準とし, 学習者の行動が, いつ・どの規範から・どの程度, 基準から逸脱したかを推定するコーチングエージェントを提案する. 提案手法では, ドキュメントをルーブリックとして構造化し, 動画中の行動と整列させることで, 各時刻の逸脱度を定量化する. これにより, 参照動画や追加学習を必要としない解釈可能なコーチング支援を実現する.",
-  resources: [
-    {
-      label: "Paper",
-      url: "/publications/kawada2026deim/paper.pdf",
-    },
-    {
-      label: "Slides",
-      url: "/publications/kawada2026deim/slides.pdf",
-    },
-    {
-      label: "Poster",
-      url: "/publications/kawada2026deim/poster.pdf",
-    },
-  ],
+  relatedLinks: {
+    Paper: "/publications/kawada2026deim/paper.pdf",
+    Slides: "/publications/kawada2026deim/slides.pdf",
+    Poster: "/publications/kawada2026deim/poster.pdf",
+  },
 };
