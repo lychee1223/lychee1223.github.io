@@ -29,6 +29,8 @@ export const kawada2026sciga: Publication = {
   relatedLinks: {
     ProjectPage: "https://iyatomilab.github.io/SciGA/",
     arXiv: "https://arxiv.org/abs/2507.02212",
+    Paper: "https://openaccess.thecvf.com/content/CVPR2026F/html/Kawada_SciGA_A_Comprehensive_Dataset_for_Designing_Graphical_Abstracts_in_Academic_CVPRF_2026_paper.html",
+    Poster: "/publications/kawada2026sciga/poster.pdf",
     Code: "https://github.com/IyatomiLab/SciGA",
     Dataset: "https://huggingface.co/datasets/iyatomilab/SciGA",
   },
