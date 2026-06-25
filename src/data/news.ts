@@ -62,6 +62,11 @@ export const newsItems: NewsItem[] = [
     href: "/publications?venue=ACL%20SRW%202026",
   },
   {
+    date: "2026-08-03",
+    title: "🗣️ We presented 3 papers at MIRU 2026!",
+    href: "/publications?venue=MIRU%202026",
+  },
+  {
     date: "2026-08-09",
     title: "🎉 Our paper has been accepted to MIPR 2026!",
     href: "/publications?venue=MIPR%202026",
