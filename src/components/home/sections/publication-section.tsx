@@ -29,32 +29,32 @@ export function PublicationSection({
   return (
     <section id={id} className="min-w-0 max-w-full">
       <SectionHeading eyebrow={eyebrow} title={title} />
-      <div className="min-w-0 max-w-full space-y-9 max-[500px]:space-y-7">
+      <div className="min-w-0 max-w-full divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
         {featuredPublications.map((publication) => (
-          <div key={publication.slug}>
+          <div key={publication.slug} className="py-2">
             <PublicationEntry publication={publication} />
           </div>
         ))}
-        {hasMorePublications && (
-          <div className="pt-2">
-            <div className="flex min-w-0 items-start justify-between gap-3 border-t border-[color:var(--line)] pt-4 sm:items-center">
-              <p className="min-w-0 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
-                Latest {featuredPublications.length} of {publications.length}
-              </p>
-              <Link
-                href={seeAllHref}
-                className="group inline-flex shrink-0 whitespace-nowrap items-center gap-2 rounded-full bg-[color:var(--surface-muted)] px-3 py-1.5 text-sm font-medium uppercase tracking-[0.14em] text-[color:var(--accent-strong)] transition-all duration-300 hover:bg-white hover:text-slate-950 hover:shadow-[0_10px_24px_-18px_rgba(37,99,235,0.45)] max-[500px]:px-2.5 max-[500px]:py-1 max-[500px]:text-xs max-[500px]:tracking-[0.1em]"
-              >
-                <span>See All</span>
-                <ArrowRight
-                  size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
+      {hasMorePublications && (
+        <div className="pt-4">
+          <div className="flex min-w-0 items-start justify-between gap-3 sm:items-center">
+            <p className="min-w-0 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
+              Latest {featuredPublications.length} of {publications.length}
+            </p>
+            <Link
+              href={seeAllHref}
+              className="group inline-flex shrink-0 whitespace-nowrap items-center gap-2 rounded-full bg-[color:var(--surface-muted)] px-3 py-1.5 text-sm font-medium uppercase tracking-[0.14em] text-[color:var(--accent-strong)] transition-all duration-300 hover:bg-white hover:text-slate-950 hover:shadow-[0_10px_24px_-18px_rgba(37,99,235,0.45)] max-[500px]:px-2.5 max-[500px]:py-1 max-[500px]:text-xs max-[500px]:tracking-[0.1em]"
+            >
+              <span>See All</span>
+              <ArrowRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

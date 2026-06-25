@@ -4,11 +4,13 @@ import { AboutSection } from "@/components/home/sections/about-section";
 import { DomesticConferenceSection } from "@/components/home/sections/domestic-conference-section";
 import { InternationalConferenceSection } from "@/components/home/sections/international-conference-section";
 import { ExperienceSection } from "@/components/home/sections/experience-section";
+import { NewsSection } from "@/components/home/sections/news-section";
 import { TalksArticlesSection } from "@/components/home/sections/talks-articles-section";
 import { aboutMe } from "@/data/aboutme";
 import { sectionOrder, Section } from "@/data/section-order";
 
 const sectionComponents: Record<Section, ComponentType> = {
+  [Section.News]: NewsSection,
   [Section.InternationalConference]: InternationalConferenceSection,
   [Section.DomesticConference]: DomesticConferenceSection,
   [Section.Articles]: TalksArticlesSection,

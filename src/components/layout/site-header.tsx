@@ -2,6 +2,7 @@ import { SiteHeaderClient } from "./site-header-client";
 
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/news", label: "News" },
   {
     label: "Publications",
     children: [

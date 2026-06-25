@@ -2,7 +2,11 @@
 
 import { PublicationEntry } from "@/components/publications/publication-entry";
 import { getAuthors } from "@/components/publications/render-authors";
-import { isTalkOrArticle, sortedPublicationData } from "@/data/publication";
+import {
+  isTalkOrArticle,
+  publicationMatchesVenue,
+  sortedPublicationData,
+} from "@/data/publication";
 import { useSearchParams } from "next/navigation";
 
 type PublicationFilterCategory =
@@ -33,6 +37,7 @@ export function PublicationsClientPage() {
   const author = searchParams.get("author") ?? undefined;
   const category = getCategoryParam(searchParams.get("category"));
   const keyword = searchParams.get("keyword") ?? undefined;
+  const venue = searchParams.get("venue") ?? undefined;
   const isTalkArticleFilter =
     category === "talks-articles" || category === "material";
 
@@ -55,6 +60,10 @@ export function PublicationsClientPage() {
       return publication.keywords?.includes(keyword);
     }
 
+    if (venue) {
+      return publicationMatchesVenue(publication, venue);
+    }
+
     return true;
   });
 
@@ -72,7 +81,9 @@ export function PublicationsClientPage() {
               ? "Category: Talks & Articles"
               : keyword
                 ? `Keyword: ${keyword}`
-                : "All Publications";
+                : venue
+                  ? `Venue: ${venue}`
+                  : "All Publications";
 
   return (
     <div className="min-h-screen bg-transparent">

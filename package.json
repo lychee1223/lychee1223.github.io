@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "eslint . --fix",
-    "format": "prettier . --write --ignore-unknown"
+    "format": "prettier . --write --ignore-unknown",
+    "news:add": "node scripts/add-news-entry.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",

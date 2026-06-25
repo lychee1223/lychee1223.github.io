@@ -189,6 +189,13 @@ export function getPublicationListVenueLabel(publication: Publication) {
   );
 }
 
+export function publicationMatchesVenue(
+  publication: Publication,
+  venue: string,
+) {
+  return publication.venueShort === venue || publication.venueFull === venue;
+}
+
 export function getPublicationCategoryLabel(publication: Publication) {
   switch (publication.category) {
     case "international-conference":

@@ -159,15 +159,15 @@ export const kawada2026sciga: Publication = {
 
 Experience の主なカラムは以下の通り
 
-| Column            | Type       | Required | Description                                                     |
-| ----------------- | ---------- | -------- | --------------------------------------------------------------- |
-| `slug`            | `string`   | yes      | 一意なID。                                                       |
-| `start`           | `string`   | yes      | 開始年月。`YYYY` または `YYYY-MM` 形式を想定しています。           |
-| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示されます。                |
-| `organization`    | `string`   | yes      | 大学、企業、組織名。                                             |
-| `organizationURL` | `string`   | no       | 組織へのリンクURL。                                              |
-| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示されます。      |
-| `meta`            | `string[]` | no       | 補足メタ情報。複数ある場合は `/` 区切りで表示されます。             |
+| Column            | Type       | Required | Description                                             |
+| ----------------- | ---------- | -------- | --------------------------------------------------------|
+| `slug`            | `string`   | yes      | 一意なID                                                 |
+| `start`           | `string`   | yes      | 開始年月。`YYYY` / `YYYY-MM`                             |
+| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示される            |
+| `organization`    | `string`   | yes      | 大学、企業、組織名                                        |
+| `organizationURL` | `string`   | no       | 組織へのリンクURL                                        |
+| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示される  |
+| `meta`            | `string[]` | no       | 補足メタ情報                                             |
 
 例:
 
@@ -183,3 +183,34 @@ export const hosei2025master: ExperienceItem = {
   meta: ["Advisor: Prof. Hitoshi Iyatomi"],
 };
 ```
+
+### News を追加する
+
+`src/data/news.ts` にニュース一覧を記述
+
+```typescript
+export const newsItems: NewsItem[] = [
+  {
+    date: "2026-08-09",
+    title: "🎉 Our paper has been accepted to MIPR 2026!",
+    href: "/publications?venue=MIPR%202026",
+  },
+];
+```
+
+CLI を叩いて自動で追加することも可能
+
+```bash
+# 会議名からニュースを追加
+npm run news:add -- venue "MIPR 2026"
+
+# talk の slug からニュースを追加
+npm run news:add -- talk kawada2026ai4science
+
+# 完全に手動のニュースを追加
+npm run news:add -- manual 2026-08-09 "Custom news title!" "/somewhere"
+```
+
+CLI は `src/data/publications/**/metadata.ts` を参照して、`venue` や `talk` に応じたニュース文面を生成
+
+重複する `href` がすでに `src/data/news.ts` にある場合は追加されない

@@ -12,7 +12,7 @@ export const kawada2025miru: Publication = {
   date: "2025-07-29",
   category: "domestic-conference",
   venueFull: "第28回 画像の認識・理解シンポジウム",
-  venueShort: "MIRU2025",
+  venueShort: "MIRU 2025",
   venueURL: "https://cvim.ipsj.or.jp/MIRU2025/",
   keywords: [
     "Natural Language Processing",
