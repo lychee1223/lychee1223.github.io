@@ -6,7 +6,7 @@ export const kawada2026deim: Publication = {
   authors: [
     { name: "Takuro Kawada" },
     { name: "Masaya Fujiwaka" },
-    { name: "Ji Xiaotong" },
+    { name: "Xiaotong Ji" },
     { name: "Jianquan Liu" },
   ],
   date: "2026-03-04",

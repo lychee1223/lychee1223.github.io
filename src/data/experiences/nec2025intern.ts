@@ -10,5 +10,7 @@ export const nec2025intern: ExperienceItem = {
   meta: [
     "Research outputs: ",
     { label: "DEIM 2026", href: "/publications/kawada2026deim" },
+    ", ",
+    { label: "MIPR 2026", href: "/publications/kawada2026document" },
   ],
 };

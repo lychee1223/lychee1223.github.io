@@ -10,6 +10,6 @@ export const authorHomepages: Record<string, string> = {
   "Kunfan Chan": "",
   "Yutaro Tanaka": "",
   "Masaya Fujiwaka": "",
-  "Ji Xiaotong": "",
+  "Xiaotong Ji": "",
   "Jianquan Liu": "",
 };
