@@ -1,4 +1,40 @@
-import { formatExperiencePeriod, experienceData } from "@/data/experience";
+import { ArrowUpRight } from "lucide-react";
+import {
+  formatExperiencePeriod,
+  experienceData,
+  type ExperienceMetaContent,
+} from "@/data/experience";
+
+const metaLinkClassName =
+  "group inline-flex items-baseline gap-1 text-[color:var(--accent-strong)] transition-colors duration-300 hover:underline hover:underline-offset-2";
+
+function renderExperienceMetaContent(
+  metaContent: ExperienceMetaContent,
+  key: string,
+) {
+  if (typeof metaContent === "string") {
+    return <span key={key}>{metaContent}</span>;
+  }
+
+  const isExternal = /^https?:\/\//.test(metaContent.href);
+
+  return (
+    <a
+      key={key}
+      href={metaContent.href}
+      className={metaLinkClassName}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+    >
+      <ArrowUpRight
+        size={12}
+        className="relative top-[0.08em] shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        aria-hidden="true"
+      />
+      {metaContent.label}
+    </a>
+  );
+}
 
 export function ExperienceTimeline() {
   const items = experienceData;
@@ -40,7 +76,12 @@ export function ExperienceTimeline() {
             </p>
             {item.meta && (
               <p className="mt-3 break-words text-sm leading-relaxed text-slate-700 sm:text-base">
-                {item.meta.join(" / ")}
+                {item.meta.map((metaContent, metaIndex) =>
+                  renderExperienceMetaContent(
+                    metaContent,
+                    `${item.slug}-meta-${metaIndex}`,
+                  ),
+                )}
               </p>
             )}
           </div>

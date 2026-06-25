@@ -6,6 +6,6 @@ export const hosei2021bachelor: ExperienceItem = {
   end: "2025-03",
   organization: "Hosei University",
   organizationURL: "https://www.hosei.ac.jp/",
-  titles: ["B.Eng."],
+  titles: ["Bachelor of Science and Engineering"],
   meta: ["Advisor: Prof. Hitoshi Iyatomi"],
 };

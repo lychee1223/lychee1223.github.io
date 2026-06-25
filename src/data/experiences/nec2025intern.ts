@@ -7,4 +7,8 @@ export const nec2025intern: ExperienceItem = {
   organization: "NEC Corporation",
   organizationURL: "https://www.nec.com/",
   titles: ["Research Intern"],
+  meta: [
+    "Research outputs: ",
+    { label: "DEIM 2026", href: "/publications/kawada2026deim" },
+  ],
 };

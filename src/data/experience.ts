@@ -1,3 +1,10 @@
+export type ExperienceMetaContent =
+  | string
+  | {
+      label: string;
+      href: string;
+    };
+
 export interface ExperienceItem {
   slug: string;
   start: string;
@@ -5,7 +12,7 @@ export interface ExperienceItem {
   organization: string;
   organizationURL?: string;
   titles: string[];
-  meta?: string[];
+  meta?: ExperienceMetaContent[];
 }
 
 type DataFileModule<T> = {
