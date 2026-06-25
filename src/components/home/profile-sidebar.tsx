@@ -6,6 +6,7 @@ import {
   Twitter,
   ArrowUpRight,
   GraduationCap,
+  Map,
 } from "lucide-react";
 import { AboutMe } from "@/data/aboutme";
 
@@ -114,6 +115,20 @@ export function ProfileSidebar({ aboutMe }: ProfileSidebarProps) {
             <Mail size={14} />
             {aboutMe.email}
           </a>
+          {aboutMe.researchmapURL && (
+            <>
+              <br />
+              <a
+                href={aboutMe.researchmapURL}
+                className="inline-flex max-w-full items-center gap-2 break-words text-base text-slate-700 transition-colors hover:text-[color:var(--accent-strong)] hover:underline hover:underline-offset-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Map size={14} />
+                Researchmap
+              </a>
+            </>
+          )}          
           {aboutMe.googleScholarURL && (
             <>
               <br />

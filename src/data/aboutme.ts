@@ -9,6 +9,7 @@ export interface AboutMe {
   imageURL?: string;
   blogURL?: string;
   cvURL?: string;
+  researchmapURL?: string;
   googleScholarURL?: string;
   twitterUsername?: string;
   githubUsername?: string;
@@ -34,6 +35,7 @@ export const aboutMe: AboutMe = {
   laboratoryURL: "https://iyatomi-lab.info/english-top/",
 
   email: "takuro.kawada@gmail.com",
+  researchmapURL: "https://researchmap.jp/lychee1223",
   googleScholarURL: "https://scholar.google.com/citations?user=Lb8EyWYAAAAJ",
   githubUsername: "lychee1223",
   linkedinUsername: "takuro-kawada-0355b43ab",
