@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
@@ -23,18 +24,59 @@ interface PublicationPageProps {
   }>;
 }
 
+const siteUrl = "https://lychee1223.github.io";
+
+function getPublicationDescription(
+  publication: NonNullable<ReturnType<typeof getPublicationBySlug>>,
+) {
+  return (
+    publication.abstract ??
+    getPublicationVenueLabel(publication) ??
+    publication.title
+  );
+}
+
 export function generateStaticParams() {
   return publicationData.map((publication) => ({
     slug: publication.slug,
   }));
 }
 
-export async function generateMetadata({ params }: PublicationPageProps) {
+export async function generateMetadata({
+  params,
+}: PublicationPageProps): Promise<Metadata> {
   const { slug } = await params;
   const publication = getPublicationBySlug(slug);
 
+  if (!publication) {
+    return {
+      title: "Publication",
+    };
+  }
+
+  const description = getPublicationDescription(publication);
+  const url = `${siteUrl}/publications/${publication.slug}`;
+  const authors = publication.authors?.map((author) => author.name);
+
   return {
-    title: publication ? publication.title : "Publication",
+    title: publication.title,
+    description,
+    openGraph: {
+      title: publication.title,
+      description,
+      type: "article",
+      url,
+      publishedTime: publication.date,
+      authors,
+    },
+    twitter: {
+      card: "summary",
+      title: publication.title,
+      description,
+    },
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
