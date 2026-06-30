@@ -1,3 +1,5 @@
+import { formatYearMonthDate } from "@/utils/date";
+
 export type ExperienceMetaContent =
   | string
   | {
@@ -71,41 +73,8 @@ function getExperienceDateSortValue(value?: string) {
   return year * 100 + month;
 }
 
-const experienceMonthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 function formatExperienceDateValue(value: string) {
-  const match = value.match(/^(\d{4})(?:-(\d{2}))?$/);
-
-  if (!match) {
-    return value;
-  }
-
-  const [, year, month] = match;
-
-  if (!month) {
-    return year;
-  }
-
-  const monthIndex = Number(month) - 1;
-
-  if (monthIndex < 0 || monthIndex >= experienceMonthNames.length) {
-    return value;
-  }
-
-  return `${experienceMonthNames[monthIndex]} ${year}`;
+  return formatYearMonthDate(value, { allowYearOnly: true }) ?? value;
 }
 
 export function formatExperiencePeriod(start: string, end?: string) {

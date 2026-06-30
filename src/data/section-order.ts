@@ -4,6 +4,7 @@ export enum Section {
   DomesticConference = "domestic-conference",
   Articles = "articles",
   Experience = "experience",
+  AwardsGrants = "awards-grants",
 }
 
 export const sectionOrder = [
@@ -12,4 +13,5 @@ export const sectionOrder = [
   Section.DomesticConference,
   Section.Articles,
   Section.Experience,
+  Section.AwardsGrants,
 ];

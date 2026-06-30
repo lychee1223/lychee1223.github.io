@@ -186,8 +186,11 @@ export const hosei2025master: ExperienceItem = {
 
 ### News を追加する
 
-`src/data/news.ts` にニュース一覧を記述
+1. `src/data/news.ts` にニュース一覧を記述  
+CLI を叩いて自動で追加することも可能
 
+
+例
 ```typescript
 export const newsItems: NewsItem[] = [
   {
@@ -197,8 +200,6 @@ export const newsItems: NewsItem[] = [
   },
 ];
 ```
-
-CLI を叩いて自動で追加することも可能
 
 ```bash
 # 会議名からニュースを追加
@@ -211,6 +212,25 @@ npm run news:add -- talk kawada2026ai4science
 npm run news:add -- manual 2026-08-09 "Custom news title!" "/somewhere"
 ```
 
-CLI は `src/data/publications/**/metadata.ts` を参照して、`venue` や `talk` に応じたニュース文面を生成
 
-重複する `href` がすでに `src/data/news.ts` にある場合は追加されない
+
+### Awards & Grants を追加する
+
+1. `src/data/awards-grants.ts` に受賞内容一覧を記述
+
+```typescript
+const awardGrantItems: AwardGrantItem[] = [
+  {
+    title: "I received the Student Presentation Award at DEIM 2026.",
+    date: "2026-03-05",
+    description: "Awarded for the presentation on ...",
+    receivedItems: ["50,000 JPY"],
+    relatedLinks: {
+    relatedLinks: {
+      Certificate: "/certificate/2026-deim-student-presentation-award.pdf",
+      Article: "https://...",
+      Publication: "/publications/kawada2026deim",
+    },
+  },
+];
+```

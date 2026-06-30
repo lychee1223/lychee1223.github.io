@@ -1,3 +1,5 @@
+import { formatYearMonthDate } from "@/utils/date";
+
 export const relatedLinkKeys = [
   "ProjectPage",
   "arXiv",
@@ -57,21 +59,6 @@ export interface Publication {
   abstract?: string;
   relatedLinks?: RelatedLinks;
 }
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 type DataFileModule<T> = {
   default?: T;
@@ -143,9 +130,8 @@ export function isTalkOrArticle(publication: Publication) {
   return publication.category === "article" || publication.category === "talk";
 }
 
-export const talkArticlePublications = sortedPublicationData.filter(
-  isTalkOrArticle,
-);
+export const talkArticlePublications =
+  sortedPublicationData.filter(isTalkOrArticle);
 
 export function getPublicationBySlug(slug: string) {
   return publicationData.find((publication) => publication.slug === slug);
@@ -209,9 +195,7 @@ export function getPublicationCategoryLabel(publication: Publication) {
   }
 }
 
-export function getRelatedLinks(
-  publication: Publication,
-): RelatedLink[] {
+export function getRelatedLinks(publication: Publication): RelatedLink[] {
   if (!publication.relatedLinks) {
     return [];
   }
@@ -224,22 +208,5 @@ export function getRelatedLinks(
 }
 
 export function formatPublicationDate(date?: string) {
-  if (!date) {
-    return null;
-  }
-
-  const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-  if (!match) {
-    return date;
-  }
-
-  const [, year, month] = match;
-  const monthIndex = Number(month) - 1;
-
-  if (monthIndex < 0 || monthIndex >= monthNames.length) {
-    return date;
-  }
-
-  return `${monthNames[monthIndex]} ${year}`;
+  return formatYearMonthDate(date, { month: "long" });
 }

@@ -15,6 +15,7 @@ const navItems = [
   },
   { href: "/#articles", label: "Talks" },
   { href: "/#experience", label: "Experience" },
+  { href: "/#awards-grants", label: "Awards" },
 ];
 
 export function SiteHeader() {

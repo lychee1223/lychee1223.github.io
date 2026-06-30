@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { ProfileSidebar } from "@/components/home/profile-sidebar";
 import { AboutSection } from "@/components/home/sections/about-section";
+import { AwardsGrantsSection } from "@/components/home/sections/awards-grants-section";
 import { DomesticConferenceSection } from "@/components/home/sections/domestic-conference-section";
 import { InternationalConferenceSection } from "@/components/home/sections/international-conference-section";
 import { ExperienceSection } from "@/components/home/sections/experience-section";
@@ -11,6 +12,7 @@ import { sectionOrder, Section } from "@/data/section-order";
 
 const sectionComponents: Record<Section, ComponentType> = {
   [Section.News]: NewsSection,
+  [Section.AwardsGrants]: AwardsGrantsSection,
   [Section.InternationalConference]: InternationalConferenceSection,
   [Section.DomesticConference]: DomesticConferenceSection,
   [Section.Articles]: TalksArticlesSection,

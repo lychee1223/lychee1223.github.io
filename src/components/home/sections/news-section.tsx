@@ -3,42 +3,7 @@ import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/home/section-heading";
 import { newsItems, type NewsItem } from "@/data/news";
-
-const newsMonthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-function formatNewsDate(date?: string) {
-  if (!date) {
-    return null;
-  }
-
-  const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-  if (!match) {
-    return date;
-  }
-
-  const [, year, month] = match;
-  const monthIndex = Number(month) - 1;
-
-  if (monthIndex < 0 || monthIndex >= newsMonthNames.length) {
-    return date;
-  }
-
-  return `${newsMonthNames[monthIndex]} ${year}`;
-}
+import { formatYearMonthDate } from "@/utils/date";
 
 function isExternalHref(href: string) {
   return /^https?:\/\//.test(href);
@@ -55,7 +20,7 @@ function NewsItemLink({
     return (
       <a
         href={item.href}
-        className="group grid min-w-0 grid-cols-1 gap-3 py-5 transition-colors duration-300 hover:bg-[color:var(--surface-muted)] max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3"
+        className="group grid min-w-0 grid-cols-1 items-center gap-3 py-5 transition-colors duration-300 hover:bg-[color:var(--surface-muted)] max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -67,7 +32,7 @@ function NewsItemLink({
   return (
     <Link
       href={item.href}
-      className="group grid min-w-0 grid-cols-1 gap-3 py-5 transition-colors duration-300 hover:bg-[color:var(--surface-muted)] max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3"
+      className="group grid min-w-0 grid-cols-1 items-center gap-3 py-5 transition-colors duration-300 hover:bg-[color:var(--surface-muted)] max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3"
     >
       {children}
     </Link>
@@ -90,7 +55,7 @@ export function NewsSection() {
           return (
             <NewsItemLink key={`${item.date}-${item.href}`} item={item}>
               <time className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
-                {formatNewsDate(item.date)}
+                {formatYearMonthDate(item.date)}
               </time>
               <div className="min-w-0">
                 <div className="flex min-w-0 items-start justify-between gap-3">
