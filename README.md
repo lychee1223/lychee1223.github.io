@@ -195,8 +195,13 @@ CLI を叩いて自動で追加することも可能
 export const newsItems: NewsItem[] = [
   {
     date: "2026-08-09",
-    title: "🎉 Our paper has been accepted to MIPR 2026!",
-    href: "/publications?venue=MIPR%202026",
+    title: "🎉 Our paper has been accepted to CVPRF 2026!",
+    items: [
+      {
+        title: "SciGA: A Comprehensive Dataset for Designing Graphical Abstracts in Academic Papers",
+        href: "/publications/kawada2026sciga",
+      },
+    ],
   },
 ];
 ```
@@ -209,7 +214,7 @@ npm run news:add -- venue "MIPR 2026"
 npm run news:add -- talk kawada2026ai4science
 
 # 完全に手動のニュースを追加
-npm run news:add -- manual 2026-08-09 "Custom news title!" "/somewhere"
+npm run news:add -- manual 2026-08-09 "Custom news title!" "Item title" "/publications/slug"
 ```
 
 

@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { PublicationEntry } from "@/components/publications/publication-entry";
+import { SectionSeeAllLink } from "@/components/home/section-see-all-link";
 import { SectionHeading } from "@/components/home/section-heading";
 import { talkArticlePublications } from "@/data/publication";
 
@@ -33,16 +32,7 @@ export function TalksArticlesSection() {
               Latest {featuredPublications.length} of{" "}
               {talkArticlePublications.length}
             </p>
-            <Link
-              href="/publications?category=talks-articles"
-              className="group inline-flex shrink-0 whitespace-nowrap items-center gap-2 rounded-full bg-[color:var(--surface-muted)] px-3 py-1.5 text-sm font-medium uppercase tracking-[0.14em] text-[color:var(--accent-strong)] transition-all duration-300 hover:bg-white hover:text-slate-950 hover:shadow-[0_10px_24px_-18px_rgba(37,99,235,0.45)] max-[500px]:px-2.5 max-[500px]:py-1 max-[500px]:text-xs max-[500px]:tracking-[0.1em]"
-            >
-              <span>See All</span>
-              <ArrowRight
-                size={15}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
+            <SectionSeeAllLink href="/publications?category=talks-articles" />
           </div>
         </div>
       )}

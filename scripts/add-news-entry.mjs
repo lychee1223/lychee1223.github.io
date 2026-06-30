@@ -8,7 +8,7 @@ import ts from "typescript";
 const usage = `Usage:
   npm run news:add -- venue "MIPR 2026"
   npm run news:add -- talk kawada2026ai4science
-  npm run news:add -- manual 2026-08-09 "Custom news title." "/somewhere"
+  npm run news:add -- manual 2026-08-09 "Custom news title." "Item title" "/publications/slug"
 `;
 
 function escapeString(value) {
@@ -109,7 +109,10 @@ function buildVenueEntry(venue, publications) {
   return {
     date: matchedPublications[0].date,
     title,
-    href: `/publications?venue=${encodeURIComponent(venue)}`,
+    items: matchedPublications.map((publication) => ({
+      title: publication.title,
+      href: `/publications/${publication.slug}`,
+    })),
   };
 }
 
@@ -128,18 +131,36 @@ function buildTalkEntry(slug, publications) {
   return {
     date: publication.date,
     title,
-    href: `/publications/${publication.slug}`,
+    items: [
+      {
+        title: publication.title,
+        href: `/publications/${publication.slug}`,
+      },
+    ],
   };
 }
 
 function buildManualEntry(args) {
-  const [date, title, href] = args;
+  const [date, title, ...itemArgs] = args;
 
-  if (!date || !title || !href) {
-    throw new Error("Manual entries require date, title, and href.");
+  if (!date || !title) {
+    throw new Error("Manual entries require date and title.");
   }
 
-  return { date, title, href };
+  if (itemArgs.length % 2 !== 0) {
+    throw new Error("Manual entry items require title/href pairs.");
+  }
+
+  const items = [];
+
+  for (let index = 0; index < itemArgs.length; index += 2) {
+    items.push({
+      title: itemArgs[index],
+      href: itemArgs[index + 1],
+    });
+  }
+
+  return { date, title, items };
 }
 
 function formatEntry(entry) {
@@ -147,7 +168,18 @@ function formatEntry(entry) {
     "  {",
     `    date: "${escapeString(entry.date)}",`,
     `    title: "${escapeString(entry.title)}",`,
-    `    href: "${escapeString(entry.href)}",`,
+    entry.items.length === 0
+      ? "    items: [],"
+      : [
+          "    items: [",
+          ...entry.items.flatMap((item) => [
+            "      {",
+            `        title: "${escapeString(item.title)}",`,
+            `        href: "${escapeString(item.href)}",`,
+            "      },",
+          ]),
+          "    ],",
+        ].join("\n"),
     "  },",
   ].join("\n");
 }
@@ -200,7 +232,10 @@ function main() {
     throw new Error("Could not find the end of newsItems array.");
   }
 
-  if (source.includes(`href: "${escapeString(entry.href)}"`)) {
+  if (
+    source.includes(`date: "${escapeString(entry.date)}"`) &&
+    source.includes(`title: "${escapeString(entry.title)}"`)
+  ) {
     console.log(`Entry already exists in ${newsFilePath}`);
     return;
   }
