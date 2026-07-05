@@ -23,5 +23,7 @@ export const takeshita2026a11y: Publication = {
   relatedLinks: {
     ProjectPage: "https://iyatomilab.github.io/a11y-compressor/",
     arXiv: "https://arxiv.org/abs/2605.00551",
+    Paper: "https://aclanthology.org/2026.acl-srw.50/",
+    Poster: "/publications/takeshita2026a11y/poster.pdf",
   },
 };

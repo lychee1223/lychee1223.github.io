@@ -5,6 +5,7 @@ export const nakagawa2026miru: Publication = {
   title: "密集圃場群における超解像衛星画像特徴と空間補正を用いた病害率推定の初期検討",
   authors: [
     { name: "Yuki Nakagawa" },
+    { name: "Yuji Arima" },
     { name: "Takuro Kawada" },
     { name: "Hitoshi Iyatomi" },
   ],

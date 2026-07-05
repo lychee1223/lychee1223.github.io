@@ -5,6 +5,7 @@ export const azegami2026miru: Publication = {
   title: "DA-LoRA: 植物病害診断におけるドメイン特徴の視覚的分析のための敵対的画像生成",
   authors: [
     { name: "Tatsuki Azegami" },
+    { name: "Yuji Arima" },
     { name: "Takuro Kawada" },
     { name: "Hitoshi Iyatomi" },
   ],

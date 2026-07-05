@@ -6,6 +6,7 @@ export const authorHomepages: Record<string, string> = {
   "Tsubasa Nakagawa": "",
   "Sota Nemoto": "",
   "Takumi Ohashi": "https://portfolio-mila.vercel.app/",
+  "Yuji Arima": "",
   "Tatsuki Azegami": "",
   "Michito Takeshita": "",
   "Yuki Nakagawa": "https://www.notion.so/361ffccf619d80cd8fc1fcc13a5df3ca",
