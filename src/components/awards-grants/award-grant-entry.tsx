@@ -84,7 +84,7 @@ export function AwardGrantEntry({
               <span key={receivedItem} className="min-w-0 break-words">
                 {receivedItem}
                 {itemIndex < receivedItems.length - 1 && (
-                  <span className="mx-2 text-slate-300">/</span>
+                  <span className="text-slate-400">,</span>
                 )}
               </span>
             ))}

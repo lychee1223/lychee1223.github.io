@@ -67,12 +67,12 @@ export const newsItems: NewsItem[] = [
         href: "/publications/kawada2025yans",
       },
       {
-        title: "WRIME-TC: 時間的文脈による書き手と読み手の感情分析の強化",
-        href: "/publications/chan2025yans",
-      },
-      {
         title: "ローカル LLM を用いた AI エージェントの現状と課題",
         href: "/publications/takeshita2025yans",
+      },
+      {
+        title: "WRIME-TC: 時間的文脈による書き手と読み手の感情分析の強化",
+        href: "/publications/chan2025yans",
       },
     ],
   },

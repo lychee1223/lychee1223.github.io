@@ -1,4 +1,5 @@
 import { formatYearMonthDate } from "@/utils/date";
+import { ownAuthorName } from "@/data/authors";
 
 export const relatedLinkKeys = [
   "ProjectPage",
@@ -109,11 +110,56 @@ function getPublicationSortValue(publication: Publication) {
   return Number.isNaN(normalizedDate) ? 0 : normalizedDate;
 }
 
-export function sortPublications(publications: Publication[]) {
-  return [...publications].sort(
-    (left, right) =>
-      getPublicationSortValue(right) - getPublicationSortValue(left),
+function getOwnAuthorPriority(publication: Publication) {
+  const authors = publication.authors ?? [];
+  const ownAuthorIndex = authors.findIndex(
+    (author) => author.name === ownAuthorName,
   );
+
+  if (ownAuthorIndex === -1) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  if (ownAuthorIndex === 0) {
+    return 0;
+  }
+
+  const isLeadEqualContribution =
+    authors[0]?.equalContribution === true &&
+    authors
+      .slice(0, ownAuthorIndex + 1)
+      .every((author) => author.equalContribution);
+
+  return isLeadEqualContribution ? 1 : ownAuthorIndex + 1;
+}
+
+function isSamePublicationVenue(left: Publication, right: Publication) {
+  return (
+    (left.venueShort !== undefined && left.venueShort === right.venueShort) ||
+    (left.venueFull !== undefined && left.venueFull === right.venueFull)
+  );
+}
+
+export function sortPublications(publications: Publication[]) {
+  return [...publications].sort((left, right) => {
+    const dateDifference =
+      getPublicationSortValue(right) - getPublicationSortValue(left);
+
+    if (dateDifference !== 0) {
+      return dateDifference;
+    }
+
+    if (isSamePublicationVenue(left, right)) {
+      const authorshipDifference =
+        getOwnAuthorPriority(left) - getOwnAuthorPriority(right);
+
+      if (authorshipDifference !== 0) {
+        return authorshipDifference;
+      }
+    }
+
+    return 0;
+  });
 }
 
 export const sortedPublicationData = sortPublications(publicationData);

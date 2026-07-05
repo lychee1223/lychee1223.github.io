@@ -81,11 +81,8 @@ export function renderAuthors(
     }
 
     return (
-      <span
-        key={`${author.name}-${index}`}
-        className={`${wrapperClassName} ${className ?? ""}`.trim()}
-      >
-        {author.name}
+      <span key={`${author.name}-${index}`} className={wrapperClassName}>
+        <span className={className}>{author.name}</span>
         {suffix ? (
           <sup className="ml-0.5 text-[0.72em] leading-none text-slate-500">
             {suffix}
