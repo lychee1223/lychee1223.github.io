@@ -24,5 +24,6 @@ export const azegami2026miru: Publication = {
     "植物病害の画像診断において, 撮影環境などのドメイン変化に十分な精度が得られないドメインシフトが問題となっている. しかし, 敵対的学習などによるドメイン依存特徴の除去は, 必ずしも精度向上に寄与しない. 本研究では, 画像生成モデルにドメインラベルを用いたドメインの分離を行うDA-LoRAを提案し, ドメイン依存, ドメイン中立特徴を画像として分離することで, それぞれの特徴が分類に与える影響を分析する.",
   relatedLinks: {
     Paper: "/publications/azegami2026miru/paper.pdf",
+    Poster: "/publications/azegami2026miru/poster.pdf",
   },
 };

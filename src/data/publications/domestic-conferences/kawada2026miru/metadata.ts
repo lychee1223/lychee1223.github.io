@@ -24,5 +24,6 @@ export const kawada2026miru: Publication = {
     "Graphical abstracts (GAs) are visual summaries that convey the key ideas, methods, and findings of academic papers at a glance. However, existing GA generation methods typically produce raster graphics that are difficult to post-edit and risk hallucinating or fabricating scientific data through image generation. We propose a framework for generating data-grounded GAs directly as editable vector graphics, enabling element-level editing in common drawing tools. We also introduce the Structural Independence Coefficient (SIC) to quantify editing simplicity. Experiments and a user study show that our method improves editability while preserving visual quality, accelerating reliable scientific communication within AI for Science.",
   relatedLinks: {
     Paper: "/publications/kawada2026miru/paper.pdf",
+    Poster: "/publications/kawada2026miru/poster.pdf",
   },
 };

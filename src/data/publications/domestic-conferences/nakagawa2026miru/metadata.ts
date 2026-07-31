@@ -24,5 +24,6 @@ export const nakagawa2026miru: Publication = {
     "本研究では, 小規模圃場が多数密集する地域を対象に, 超解像処理した低解像度衛星画像と圃場間の地理的関係を用いる GNN を統合した病害率推定手法を検討した. 群馬県・松義台地約 9 ㎢ にある 321 のコンニャク圃場で評価した結果, 超解像処理により画像単体モデルの性能が改善し, GNN 補正によってさらに向上した. 両者を統合した提案手法は最も高い性能を示し, 低コストな病害診断の実現可能性を示した.",
   relatedLinks: {
     Paper: "/publications/nakagawa2026miru/paper.pdf",
+    Poster: "/publications/nakagawa2026miru/poster.pdf",
   },
 };
