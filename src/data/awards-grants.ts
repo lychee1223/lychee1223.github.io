@@ -36,21 +36,20 @@ export interface AwardGrantItem {
 
 const awardGrantItems: AwardGrantItem[] = [
   {
-    title: "I received the Academic Excellence Award from Hosei University.",
+    title: "Hosei University Academic Excellence Award",
     date: "2023-07-07",
     description:
-      "2023年度 理工系学部教育・研究振興基金 学業優秀賞を受賞しました. 本賞は学部3年次での成績最上位者に授与されるものです.",
+      "I received the 2023 Academic Excellence Award from the Faculty of Science and Engineering Education and Research Promotion Fund at Hosei University. This award is presented to the student with the highest academic performance within their department in the third undergraduate year.",
     receivedItems: ["50,000 JPY"],
     relatedLinks: {
       Certificate: "/certificate/2023-hosei-academic-excellence-award.pdf",
     },
   },
   {
-    title:
-      "I was selected for Hosei University's Highest Academic Achievement Scholarship.",
+    title: "Hosei University Highest Academic Achievement Scholarship",
     date: "2024-06-22",
     description:
-      "2024年度 成績最優秀者奨学生に選出されました. 本奨学金は学部4年次での成績上位者に給付されるものです.",
+      "I was selected for Hosei University's 2024 Highest Academic Achievement Scholarship. This scholarship is awarded to students with outstanding academic performance within their departments in the fourth undergraduate year.",
     receivedItems: ["300,000 JPY"],
     relatedLinks: {
       Certificate:
@@ -58,11 +57,10 @@ const awardGrantItems: AwardGrantItem[] = [
     },
   },
   {
-    title:
-      "I received the Hosei University Science and Engineering Alumni Association Award.",
+    title: "Hosei University Science and Engineering Alumni Association Award",
     date: "2025-03-24",
     description:
-      "2024年度 法政大学理系同窓会褒賞を受賞しました. 本賞は首席で卒業した学生に授与されるものです.",
+      "I received the 2024 Hosei University Science and Engineering Alumni Association Award. This award is presented to the student who graduates at the top of their department.",
     receivedItems: ["Commemorative Pen"],
     relatedLinks: {
       Certificate:
@@ -70,48 +68,47 @@ const awardGrantItems: AwardGrantItem[] = [
     },
   },
   {
-    title: "I received the Best Graduation Thesis Award from Hosei University.",
+    title: "Hosei University Best Graduation Thesis Award",
     date: "2025-03-24",
-    description: "2024年度 卒業論文審査会最優秀賞を受賞しました.",
+    description:
+      "I received Hosei University's 2024 Best Graduation Thesis Award.",
     relatedLinks: {
       Certificate: "/certificate/2025-hosei-best-graduation-thesis-award.pdf",
     },
   },
   {
-    title:
-      "I received the Educational Contribution Award from Hosei University.",
+    title: "Hosei University Educational Contribution Award",
     date: "2025-03-24",
     description:
-      "2024年度 教育貢献賞を受賞しました. 本賞はラーニング・サポーターとしての活動に対して授与されたものです.",
+      "I received Hosei University's 2024 Educational Contribution Award for my work as a learning supporter.",
     relatedLinks: {
       Certificate: "/certificate/2025-hosei-educational-contribution-award.pdf",
     },
   },
   {
-    title: "I received the Hosei University Student Association Award.",
+    title: "Hosei University Student Association Award",
     date: "2025-03-24",
     description:
-      "2025年度 学友会表彰者に選出されました. 本表彰は技術系サークル計算技術研究会における副会長としての活動に対して授与されたものです.",
+      "I received Hosei University's 2025 Student Association Award for my activities as vice president of the Computing Technology Research Club.",
     receivedItems: ["Book Gift Card (500 JPY)"],
     relatedLinks: {
       Certificate: "/certificate/2025-hosei-student-association-award.pdf",
     },
   },
   {
-    title:
-      "I received the Jury Special Award in the SFT Track at the YANS 2025 Hackathon.",
+    title: "Jury Special Award in the SFT Track at YANS 2025",
     date: "2025-09-17",
     description:
-      "YANS 2025 の分野交流ハッカソンにて, SFT 部門・審査員特別賞を受賞しました.",
+      "I received the Jury Special Award in the SFT Track at the YANS 2025 Interdisciplinary Hackathon.",
     relatedLinks: {
       Certificate: "/certificate/2025-yans-hackathon-jury-special-award.pdf",
       Article: "https://www.hosei.ac.jp/info/article-20250924091423/",
     },
   },
   {
-    title: "I received the ABEJA Sponsor Award at YANS 2025.",
+    title: "ABEJA Sponsor Award at YANS 2025",
     date: "2025-09-19",
-    description: "YANS 2025 にて, ABEJA 賞を受賞しました.",
+    description: "I received the ABEJA Sponsor Award at YANS 2025.",
     receivedItems: ["Anker Power Bank", "ABEJA Original T-shirt"],
     relatedLinks: {
       Certificate: "/certificate/2025-yans-sponsor-award.pdf",
@@ -120,23 +117,31 @@ const awardGrantItems: AwardGrantItem[] = [
     },
   },
   {
-    title: "I received the Student Presentation Award at DEIM 2026.",
+    title: "Student Presentation Award at DEIM 2026",
     date: "2026-03-05",
-    description: "DEIM 2026 にて, 学生プレゼンテーション賞を受賞しました.",
+    description: "I received the Student Presentation Award at DEIM 2026.",
     relatedLinks: {
       Certificate: "/certificate/2026-deim-student-presentation-award.pdf",
       Publication: "/publications/kawada2026deim",
     },
   },
   {
-    title: "I received the Academic Excellence Award from Hosei University.",
+    title: "Hosei University Academic Excellence Award",
     date: "2026-06-05",
     description:
-      "2026年度 理工系学部教育・研究振興基金 学業優秀賞を受賞しました. 本賞は修士課程2年次での成績最上位者に授与されるものです.",
+      "I received the 2026 Academic Excellence Award from the Faculty of Science and Engineering Education and Research Promotion Fund at Hosei University. This award is presented to the student with the highest academic performance within their department in the second year of the master's program.",
     receivedItems: ["50,000 JPY"],
     relatedLinks: {
       Certificate: "/certificate/2026-hosei-academic-excellence-award.pdf",
     },
+  },
+  {
+    title:
+      "Hosei University 100th Anniversary Scholarship for Master's Program Students",
+    date: "2026-07-30",
+    description:
+      "I was selected for the 2026 Hosei University 100th Anniversary Scholarship for Master's Program Students. This university-funded scholarship supports master's students who have excellent academic records and character and need financial assistance.",
+    receivedItems: ["200,000 JPY"],
   },
 ];
 
