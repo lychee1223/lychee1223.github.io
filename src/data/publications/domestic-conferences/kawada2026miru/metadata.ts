@@ -14,8 +14,8 @@ export const kawada2026miru: Publication = {
   venueShort: "MIRU 2026",
   venueURL: "https://miru-committee.github.io/miru2026/",
   keywords: [
-    "Natural Language Processing",
     "Computer Vision",
+    "Natural Language Processing",
     "Vision & Language",
     "Image Generation",
     "AI for Science",
