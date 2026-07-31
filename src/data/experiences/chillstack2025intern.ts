@@ -5,5 +5,5 @@ export const chillstack2025intern: ExperienceItem = {
   start: "2025-09",
   organization: "ChillStack Inc.",
   organizationURL: "https://chillstack.com/",
-  titles: ["AI Research Engineer"],
+  titles: ["Part-time AI Research Engineer"],
 };

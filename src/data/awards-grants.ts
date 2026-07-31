@@ -140,7 +140,7 @@ const awardGrantItems: AwardGrantItem[] = [
       "Hosei University 100th Anniversary Scholarship for Master's Program Students",
     date: "2026-07-30",
     description:
-      "I was selected for the 2026 Hosei University 100th Anniversary Scholarship for Master's Program Students. This university-funded scholarship supports master's students who have excellent academic records and character and need financial assistance.",
+      "I was selected for the 2026 Hosei University 100th Anniversary Scholarship for Master's Program Students. This university-funded scholarship is awarded to master's students with outstanding academic performance.",
     receivedItems: ["200,000 JPY"],
   },
 ];

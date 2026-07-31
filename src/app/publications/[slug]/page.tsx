@@ -174,9 +174,9 @@ export default async function PublicationPage({
               <h2 className="font-serif text-base font-bold mb-4 tracking-wide uppercase">
                 Abstract
               </h2>
-              <p className="paper-copy text-sm text-zinc-700 leading-relaxed">
-                {publication.abstract}
-              </p>
+              <div className="publication-abstract paper-copy text-sm text-zinc-700 leading-relaxed">
+                <Markdown source={publication.abstract} />
+              </div>
             </section>
           )}
 

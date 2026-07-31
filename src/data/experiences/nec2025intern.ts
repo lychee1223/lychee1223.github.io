@@ -6,9 +6,11 @@ export const nec2025intern: ExperienceItem = {
   end: "2026-01",
   organization: "NEC Corporation",
   organizationURL: "https://www.nec.com/",
-  titles: ["Research Intern"],
+  titles: [
+    "Research Intern, Visual Intelligence Research Laboratories (now Cyber-Physical Intelligence Research Laboratories)",
+  ],
   meta: [
-    "Research outputs: ",
+    "Related publications: ",
     { label: "DEIM 2026", href: "/publications/kawada2026deim" },
     ", ",
     { label: "MIPR 2026", href: "/publications/kawada2026document" },

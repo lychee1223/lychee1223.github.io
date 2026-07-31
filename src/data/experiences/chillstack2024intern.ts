@@ -6,5 +6,5 @@ export const chillstack2024intern: ExperienceItem = {
   end: "2025-09",
   organization: "ChillStack Inc.",
   organizationURL: "https://chillstack.com/",
-  titles: ["Web Application Engineer"],
+  titles: ["Part-time Web Application Engineer"],
 };

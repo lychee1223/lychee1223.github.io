@@ -145,6 +145,26 @@ body::before {
   word-break: normal;
 }
 
+.publication-abstract a {
+  color: var(--accent-strong);
+  text-decoration: none;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition:
+    color 300ms ease,
+    text-decoration-color 300ms ease;
+}
+
+.publication-abstract a:hover {
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+}
+
+.publication-abstract a:hover .publication-mdx-link-icon {
+  transform: translate(0.125rem, -0.08rem);
+}
+
 .publication-mdx {
   color: #334155;
   font-size: 0.95rem;
