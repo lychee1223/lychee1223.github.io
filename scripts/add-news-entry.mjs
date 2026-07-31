@@ -51,15 +51,17 @@ function getExportedObject(moduleExports) {
 }
 
 function walkFiles(directoryPath) {
-  return fs.readdirSync(directoryPath, { withFileTypes: true }).flatMap((entry) => {
-    const fullPath = path.join(directoryPath, entry.name);
+  return fs
+    .readdirSync(directoryPath, { withFileTypes: true })
+    .flatMap((entry) => {
+      const fullPath = path.join(directoryPath, entry.name);
 
-    if (entry.isDirectory()) {
-      return walkFiles(fullPath);
-    }
+      if (entry.isDirectory()) {
+        return walkFiles(fullPath);
+      }
 
-    return [fullPath];
-  });
+      return [fullPath];
+    });
 }
 
 function loadOwnAuthorName() {
@@ -74,7 +76,10 @@ function loadOwnAuthorName() {
 }
 
 function loadPublications() {
-  const publicationsDirectory = path.join(process.cwd(), "src/data/publications");
+  const publicationsDirectory = path.join(
+    process.cwd(),
+    "src/data/publications",
+  );
   const metadataPaths = walkFiles(publicationsDirectory).filter((filePath) =>
     filePath.endsWith("/metadata.ts"),
   );
@@ -84,7 +89,30 @@ function loadPublications() {
   );
 }
 
-function buildVenueEntry(venue, publications) {
+function getOwnAuthorPriority(publication, ownAuthorName) {
+  const authors = publication.authors ?? [];
+  const ownAuthorIndex = authors.findIndex(
+    (author) => author.name === ownAuthorName,
+  );
+
+  if (ownAuthorIndex === -1) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  if (ownAuthorIndex === 0) {
+    return 0;
+  }
+
+  const isLeadEqualContribution =
+    authors[0]?.equalContribution === true &&
+    authors
+      .slice(0, ownAuthorIndex + 1)
+      .every((author) => author.equalContribution);
+
+  return isLeadEqualContribution ? 1 : ownAuthorIndex + 1;
+}
+
+function buildVenueEntry(venue, publications, ownAuthorName) {
   const matchedPublications = publications.filter(
     (publication) =>
       publication.venueShort === venue || publication.venueFull === venue,
@@ -94,7 +122,17 @@ function buildVenueEntry(venue, publications) {
     throw new Error(`No publications found for venue: ${venue}`);
   }
 
-  matchedPublications.sort((left, right) => right.date.localeCompare(left.date));
+  matchedPublications.sort((left, right) => {
+    const authorshipDifference =
+      getOwnAuthorPriority(left, ownAuthorName) -
+      getOwnAuthorPriority(right, ownAuthorName);
+
+    if (authorshipDifference !== 0) {
+      return authorshipDifference;
+    }
+
+    return right.date.localeCompare(left.date);
+  });
 
   const category = matchedPublications[0].category;
   const title =
@@ -187,6 +225,7 @@ function formatEntry(entry) {
 function buildEntry(args) {
   const [type, ...rest] = args;
   const publications = loadPublications();
+  const ownAuthorName = loadOwnAuthorName();
 
   if (type === "venue") {
     const venue = rest[0];
@@ -195,7 +234,7 @@ function buildEntry(args) {
       throw new Error("Venue name is required.");
     }
 
-    return buildVenueEntry(venue, publications);
+    return buildVenueEntry(venue, publications, ownAuthorName);
   }
 
   if (type === "talk") {

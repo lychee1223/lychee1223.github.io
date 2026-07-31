@@ -165,4 +165,30 @@ export const newsItems: NewsItem[] = [
       },
     ],
   },
+  {
+    date: "2026-08-16",
+    title: "🗣️ We presented 5 papers at YANS 2026!",
+    items: [
+      {
+        title: "Code2Figure: 学術論文における実装コードに基づくモデル図生成の初期検討",
+        href: "/publications/kawada2026yans",
+      },
+      {
+        title: "Where Do Vision-Language Models Preserve and Use Depth Information?",
+        href: "/publications/chan2026yans",
+      },
+      {
+        title: "Activation Steering における文章崩壊の抑制に向けた初期検討",
+        href: "/publications/nishiyama2026yans",
+      },
+      {
+        title: "視覚言語モデルを用いた AI エージェントによる悪質サイトの検知と警告能力の評価",
+        href: "/publications/takeshita2026yans",
+      },
+      {
+        title: "視覚言語モデルと病徴属性を用いた植物病害診断手法の検討",
+        href: "/publications/sutoh2026yans",
+      },
+    ],
+  },
 ].sort((left, right) => getSortValue(right.date) - getSortValue(left.date));
