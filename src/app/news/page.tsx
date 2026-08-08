@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NewsDetailLink } from "@/components/news/news-detail-link";
 import { newsItems } from "@/data/news";
 import { formatYearMonthDate } from "@/utils/date";
 
@@ -52,12 +52,10 @@ export default function NewsPage() {
                             className="mt-[0.62em] h-1 w-1 shrink-0 rounded-full bg-current"
                             aria-hidden="true"
                           />
-                          <Link
+                          <NewsDetailLink
                             href={detail.href}
-                            className="min-w-0 break-words text-slate-600 transition-colors duration-200 hover:text-blue-600 focus-visible:text-blue-600 focus-visible:outline-none"
-                          >
-                            {detail.title}
-                          </Link>
+                            title={detail.title}
+                          />
                         </li>
                       ))}
                     </ul>

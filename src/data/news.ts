@@ -78,7 +78,7 @@ export const newsItems: NewsItem[] = [
   },
   {
     date: "2025-09-19",
-    title: "🎉 Our paper received the ABEJA Sponsor Award at YANS 2025!",
+    title: "🏆 Our paper received the ABEJA Sponsor Award at YANS 2025!",
     items: [
       {
         title:
@@ -99,7 +99,7 @@ export const newsItems: NewsItem[] = [
   },
   {
     date: "2026-03-05",
-    title: "🎉 Our paper received the Student Presentation Award at DEIM 2026!",
+    title: "🏆 Our paper received the Student Presentation Award at DEIM 2026!",
     items: [
       {
         title: "動画に基づく教本参照型コーチングエージェントの構築",
@@ -156,6 +156,16 @@ export const newsItems: NewsItem[] = [
     ],
   },
   {
+    date: "2026-07-18",
+    title: "🎤 I gave a talk at the Computer Vision Paper Reading!",
+    items: [
+      {
+        title: "CV × Scientific Figures",
+        href: "/publications/kawada2026kantocv",
+      },
+    ],
+  },
+  {
     date: "2026-08-03",
     title: "🗣️ We presented 3 papers at MIRU 2026!",
     items: [
@@ -177,6 +187,16 @@ export const newsItems: NewsItem[] = [
     ],
   },
   {
+    date: "2026-08-03",
+    title: "🌱 I joined LENS as a committee member and helped launch it!",
+    items: [
+      {
+        title: "Learning and Exchange Network for Vision Studies (LENS)",
+        href: "https://lens-kousiki.com/",
+      },
+    ],
+  },
+  {
     date: "2026-08-09",
     title: "🎉 Our paper has been accepted to MIPR 2026!",
     items: [
@@ -188,7 +208,7 @@ export const newsItems: NewsItem[] = [
   },
   {
     date: "2026-08-11",
-    title: "🎉 Our paper was selected as a Best Paper Finalist at MIPR 2026!",
+    title: "🏆 Our paper was selected as a Best Paper Finalist at MIPR 2026!",
     items: [
       {
         title: "Document-Grounded Coaching Agent for Video Skill Assessment",
