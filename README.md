@@ -119,6 +119,7 @@ Publication の主なカラムは以下の通り
 | -------------------------- | ----------- |
 | `international-conference` | 国際会議     |
 | `domestic-conference`      | 国内会議     |
+| `preprint`                 | Preprint    |
 | `article`                  | 記事        |
 | `talk`                     | 登壇/講演    |
 
@@ -155,7 +156,7 @@ export const kawada2026sciga: Publication = {
 
 ### Experience を追加する
 
-1. Experience データを `src/data//experiences/<slug>.ts` に記述
+1. Experience データを `src/data/experiences/<slug>.ts` に記述
 
 Experience の主なカラムは以下の通り
 
@@ -230,7 +231,6 @@ const awardGrantItems: AwardGrantItem[] = [
     date: "2026-03-05",
     description: "Awarded for the presentation on ...",
     receivedItems: ["50,000 JPY"],
-    relatedLinks: {
     relatedLinks: {
       Certificate: "/certificate/2026-deim-student-presentation-award.pdf",
       Article: "https://...",

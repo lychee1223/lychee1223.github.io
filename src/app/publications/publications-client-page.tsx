@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 type PublicationFilterCategory =
   | "international-conference"
   | "domestic-conference"
+  | "preprint"
   | "article"
   | "talk"
   | "talks-articles"
@@ -21,6 +22,7 @@ function getCategoryParam(value: string | null) {
   if (
     value === "international-conference" ||
     value === "domestic-conference" ||
+    value === "preprint" ||
     value === "article" ||
     value === "talk" ||
     value === "talks-articles" ||
@@ -73,17 +75,19 @@ export function PublicationsClientPage() {
       ? "Category: International Conferences"
       : category === "domestic-conference"
         ? "Category: Domestic Conferences"
-        : category === "article"
-          ? "Category: Articles"
-          : category === "talk"
-            ? "Category: Talks"
-            : isTalkArticleFilter
-              ? "Category: Talks & Articles"
-              : keyword
-                ? `Keyword: ${keyword}`
-                : venue
-                  ? `Venue: ${venue}`
-                  : "All Publications";
+        : category === "preprint"
+          ? "Category: Preprints"
+          : category === "article"
+            ? "Category: Articles"
+            : category === "talk"
+              ? "Category: Talks"
+              : isTalkArticleFilter
+                ? "Category: Talks & Articles"
+                : keyword
+                  ? `Keyword: ${keyword}`
+                  : venue
+                    ? `Venue: ${venue}`
+                    : "All Publications";
 
   return (
     <div className="min-h-screen bg-transparent">

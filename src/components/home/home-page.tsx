@@ -2,21 +2,23 @@ import type { ComponentType } from "react";
 import { ProfileSidebar } from "@/components/home/profile-sidebar";
 import { AboutSection } from "@/components/home/sections/about-section";
 import { AwardsGrantsSection } from "@/components/home/sections/awards-grants-section";
-import { DomesticConferenceSection } from "@/components/home/sections/domestic-conference-section";
 import { InternationalConferenceSection } from "@/components/home/sections/international-conference-section";
+import { DomesticConferenceSection } from "@/components/home/sections/domestic-conference-section";
 import { ExperienceSection } from "@/components/home/sections/experience-section";
 import { NewsSection } from "@/components/home/sections/news-section";
+import { PreprintSection } from "@/components/home/sections/preprint-section";
 import { TalksArticlesSection } from "@/components/home/sections/talks-articles-section";
 import { aboutMe } from "@/data/aboutme";
 import { sectionOrder, Section } from "@/data/section-order";
 
 const sectionComponents: Record<Section, ComponentType> = {
   [Section.News]: NewsSection,
-  [Section.AwardsGrants]: AwardsGrantsSection,
   [Section.InternationalConference]: InternationalConferenceSection,
   [Section.DomesticConference]: DomesticConferenceSection,
+  [Section.Preprint]: PreprintSection,
   [Section.Articles]: TalksArticlesSection,
   [Section.Experience]: ExperienceSection,
+  [Section.AwardsGrants]: AwardsGrantsSection,
 };
 
 export function HomePage() {

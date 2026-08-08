@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { AwardBadge } from "@/components/publications/award-badge";
 import {
   formatPublicationDate,
+  getPublicationDatePrefix,
   getRelatedLinks,
   getPublicationVenueLabel,
   getPublicationVenuePrefix,
@@ -94,6 +95,7 @@ export default async function PublicationPage({
   const publicationContent = getPublicationContentBySlug(publication.slug);
   const venueLabel = getPublicationVenueLabel(publication);
   const venuePrefix = getPublicationVenuePrefix(publication);
+  const datePrefix = getPublicationDatePrefix(publication);
   const authorNotes = publication.authors
     ? getAuthorNotes(publication.authors)
     : [];
@@ -138,7 +140,7 @@ export default async function PublicationPage({
             )}
             {publication.date && (
               <p className="text-sm text-zinc-700">
-                <span className="text-zinc-500">Presented:</span>{" "}
+                <span className="text-zinc-500">{datePrefix}</span>{" "}
                 {formatPublicationDate(publication.date)}
               </p>
             )}

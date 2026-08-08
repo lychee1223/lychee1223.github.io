@@ -43,6 +43,7 @@ export interface PublicationAuthor {
 export type PublicationCategory =
   | "international-conference"
   | "domestic-conference"
+  | "preprint"
   | "article"
   | "talk";
 
@@ -172,6 +173,10 @@ export const domesticConferencePublications = sortedPublicationData.filter(
   (publication) => publication.category === "domestic-conference",
 );
 
+export const preprintPublications = sortedPublicationData.filter(
+  (publication) => publication.category === "preprint",
+);
+
 export function isTalkOrArticle(publication: Publication) {
   return publication.category === "article" || publication.category === "talk";
 }
@@ -208,8 +213,21 @@ export function getPublicationVenuePrefix(publication: Publication) {
       return "Article:";
     case "talk":
       return "Event:";
+    case "preprint":
+      return "Preprint:";
     default:
       return "Publication:";
+  }
+}
+
+export function getPublicationDatePrefix(publication: Publication) {
+  switch (publication.category) {
+    case "preprint":
+      return "Posted:";
+    case "article":
+      return "Published:";
+    default:
+      return "Presented:";
   }
 }
 
@@ -234,6 +252,8 @@ export function getPublicationCategoryLabel(publication: Publication) {
       return "International Conferences";
     case "domestic-conference":
       return "Domestic Conferences";
+    case "preprint":
+      return "Preprints";
     case "article":
       return "Articles";
     case "talk":
