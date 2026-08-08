@@ -77,8 +77,29 @@ export const newsItems: NewsItem[] = [
     ],
   },
   {
+    date: "2025-09-19",
+    title: "🎉 Our paper received the ABEJA Sponsor Award at YANS 2025!",
+    items: [
+      {
+        title:
+          "GenGA: 学術論文における編集可能な Graphical Abstract の自動生成に関する初期検討",
+        href: "/publications/kawada2025yans",
+      },
+    ],
+  },
+  {
     date: "2026-03-04",
     title: "🗣️ We presented a paper at DEIM 2026!",
+    items: [
+      {
+        title: "動画に基づく教本参照型コーチングエージェントの構築",
+        href: "/publications/kawada2026deim",
+      },
+    ],
+  },
+  {
+    date: "2026-03-05",
+    title: "🎉 Our paper received the Student Presentation Award at DEIM 2026!",
     items: [
       {
         title: "動画に基づく教本参照型コーチングエージェントの構築",
@@ -158,6 +179,16 @@ export const newsItems: NewsItem[] = [
   {
     date: "2026-08-09",
     title: "🎉 Our paper has been accepted to MIPR 2026!",
+    items: [
+      {
+        title: "Document-Grounded Coaching Agent for Video Skill Assessment",
+        href: "/publications/kawada2026document",
+      },
+    ],
+  },
+  {
+    date: "2026-08-11",
+    title: "🎉 Our paper was selected as a Best Paper Finalist at MIPR 2026!",
     items: [
       {
         title: "Document-Grounded Coaching Agent for Video Skill Assessment",

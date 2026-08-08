@@ -2,9 +2,10 @@ export const ownAuthorName = "Takuro Kawada";
 
 export const authorHomepages: Record<string, string> = {
   "Hitoshi Iyatomi": "https://iyatomi-lab.info/english-top/",
+  "Kentaro Ikeda": "https://researchmap.jp/read0132094",
   "Shunsuke Kitada": "https://shunk031.me",
   "Tsubasa Nakagawa": "",
-  "Sota Nemoto": "",
+  "Sota Nemoto": "https://researchmap.jp/sota_nemoto",
   "Ryugo Morita": "https://ryugo417.github.io/",
   "Takumi Ohashi": "https://portfolio-mila.vercel.app/",
   "Yuji Arima": "",
@@ -20,5 +21,5 @@ export const authorHomepages: Record<string, string> = {
   "Ryotaro Shimizu": "https://jchanxtarov.github.io/",
   "Masaya Fujiwaka": "",
   "Xiaotong Ji": "",
-  "Jianquan Liu": "",
+  "Jianquan Liu": "https://www.nec.com/en/global/rd/people/jianquan_liu.html",
 };

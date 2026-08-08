@@ -108,7 +108,7 @@ const awardGrantItems: AwardGrantItem[] = [
   {
     title: "ABEJA Sponsor Award at YANS 2025",
     date: "2025-09-19",
-    description: "I received the ABEJA Sponsor Award at YANS 2025.",
+    description: "Our paper received the ABEJA Sponsor Award at YANS 2025.",
     receivedItems: ["Anker Power Bank", "ABEJA Original T-shirt"],
     relatedLinks: {
       Certificate: "/certificate/2025-yans-sponsor-award.pdf",
@@ -119,7 +119,8 @@ const awardGrantItems: AwardGrantItem[] = [
   {
     title: "Student Presentation Award at DEIM 2026",
     date: "2026-03-05",
-    description: "I received the Student Presentation Award at DEIM 2026.",
+    description:
+      "Our paper received the Student Presentation Award at DEIM 2026.",
     relatedLinks: {
       Certificate: "/certificate/2026-deim-student-presentation-award.pdf",
       Publication: "/publications/kawada2026deim",
@@ -142,6 +143,15 @@ const awardGrantItems: AwardGrantItem[] = [
     description:
       "I was selected for the 2026 Hosei University 100th Anniversary Scholarship for Master's Program Students. This university-funded scholarship is awarded to master's students with outstanding academic performance.",
     receivedItems: ["200,000 JPY"],
+  },
+  {
+    title: "Best Paper Finalist at MIPR 2026",
+    date: "2026-08-09",
+    description:
+      "Our paper was selected as a Best Paper Finalist at MIPR 2026.",
+    relatedLinks: {
+      Publication: "/publications/kawada2026document",
+    },
   },
 ];
 

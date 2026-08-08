@@ -7,6 +7,7 @@ export const nakagawa2026miru: Publication = {
     { name: "Yuki Nakagawa" },
     { name: "Yuji Arima" },
     { name: "Takuro Kawada" },
+    { name: "Kentaro Ikeda" },
     { name: "Hitoshi Iyatomi" },
   ],
   date: "2026-08-03",
