@@ -25,4 +25,7 @@ export const chan2026yans: Publication = {
   ],
   abstract:
     "Vision-language models (VLMs) can answer some qualitative and ordinal depth questions, but remain substantially weaker at estimating continuous depth magnitudes. However, poor performance alone does not reveal whether the difficulty stems from inferring depth from two-dimensional input or from a failure to preserve and use depth-related information within the model. We address this problem by constructing synthetic images with exact geometric ground truth, independently manipulating true depth and correlated visual cues, and applying controlled linear probes and causal interventions across prespecified stages of the processing pipeline, from the vision encoder to answer generation. This work introduces an analysis framework for identifying where depth-related information is recoverable and whether it causally contributes to the model's answers, thereby providing a basis for diagnosing the mechanisms underlying spatial reasoning in VLMs.",
+  relatedLinks: {
+    Poster: "/publications/domestic-conferences/chan2026yans/poster.pdf",
+  },
 };
