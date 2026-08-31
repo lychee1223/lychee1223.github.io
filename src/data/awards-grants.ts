@@ -96,7 +96,7 @@ const awardGrantItems: AwardGrantItem[] = [
     },
   },
   {
-    title: "Jury Special Award in the SFT Track at YANS 2025",
+    title: "Jury Special Award in the SFT Track at the YANS 2025 Hackathon",
     date: "2025-09-17",
     description:
       "I received the Jury Special Award in the SFT Track at the YANS 2025 Interdisciplinary Hackathon.",
@@ -151,6 +151,16 @@ const awardGrantItems: AwardGrantItem[] = [
       "Our paper was selected as a Best Paper Finalist at MIPR 2026.",
     relatedLinks: {
       Publication: "/publications/kawada2026document",
+    },
+  },
+  {
+    title:
+      "YANS Committee Special Award in the OMD Track at the YANS 2026 Hackathon",
+    date: "2026-08-16",
+    description:
+      "I received the YANS Committee Special Award in the OMD Track at the YANS 2026 Interdisciplinary Hackathon.",
+    relatedLinks: {
+      Publication: "/publications/kawada2026yans",
     },
   },
 ];
