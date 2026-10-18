@@ -110,6 +110,7 @@ Publication の主なカラムは以下の通り
 | `venueURL`     | `string`              | no       | 会議やイベントの URL                           |
 | `keywords`     | `string[]`            | no       | キーワード                                    |
 | `awards`       | `string[]`            | no       | 受賞情報                                      |
+| `acceptanceRate` | `string`            | no       | 採択率（例: `34.7%`）                         |
 | `abstract`     | `string`              | no       | 概要                                         |
 | `relatedLinks` | `RelatedLinks`        | no       | Paper、Poster、Slides、arXiv などの関連リンク  |
 

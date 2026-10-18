@@ -17,6 +17,7 @@ export const takeshita2026a11y: Publication = {
     "the 64th Annual Meeting of the Association for Computational Linguistics: Student Research Workshop",
   venueShort: "ACL SRW 2026",
   venueURL: "https://2026.aclweb.org/",
+  acceptanceRate: "34.7%",
   keywords: [
     "Natural Language Processing",
     "Vision & Language",

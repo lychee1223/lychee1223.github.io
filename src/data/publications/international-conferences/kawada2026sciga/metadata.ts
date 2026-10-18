@@ -16,6 +16,7 @@ export const kawada2026sciga: Publication = {
     "the 2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition–FINDINGS Track",
   venueShort: "CVPRF 2026",
   venueURL: "https://cvpr.thecvf.com/Conferences/2026",
+  acceptanceRate: "36.1%",
   keywords: [
     "Natural Language Processing",
     "Computer Vision",

@@ -58,6 +58,7 @@ export interface Publication {
   venueURL?: string;
   keywords?: string[];
   awards?: string[];
+  acceptanceRate?: string;
   abstract?: string;
   relatedLinks?: RelatedLinks;
 }

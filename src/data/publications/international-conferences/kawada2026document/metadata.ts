@@ -16,6 +16,7 @@ export const kawada2026document: Publication = {
     "The 9th IEEE International Conference on Multimedia Information Processing and Retrieval",
   venueShort: "MIPR 2026",
   venueURL: "https://mipr2026.org/",
+  acceptanceRate: "19.8%",
   keywords: [
     "Natural Language Processing",
     "Computer Vision",

@@ -144,6 +144,12 @@ export default async function PublicationPage({
                 {formatPublicationDate(publication.date)}
               </p>
             )}
+            {publication.acceptanceRate && (
+              <p className="text-sm text-zinc-700">
+                <span className="text-zinc-500">Acceptance Rate:</span>{" "}
+                {publication.acceptanceRate}
+              </p>
+            )}
             {publication.keywords && publication.keywords.length > 0 && (
               <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-2">
                 <span className="whitespace-nowrap text-sm text-zinc-500">
