@@ -145,10 +145,10 @@ const awardGrantItems: AwardGrantItem[] = [
     receivedItems: ["200,000 JPY"],
   },
   {
-    title: "Best Paper Finalist at MIPR 2026",
+    title: "Best Paper Candidate at MIPR 2026",
     date: "2026-08-09",
     description:
-      "Our paper was selected as a Best Paper Finalist at MIPR 2026.",
+      "Our paper was selected as a Best Paper Candidate at MIPR 2026.",
     relatedLinks: {
       Publication: "/publications/kawada2026document",
     },
@@ -160,6 +160,7 @@ const awardGrantItems: AwardGrantItem[] = [
     description:
       "I received the YANS Committee Special Award in the OMD Track at the YANS 2026 Interdisciplinary Hackathon.",
     relatedLinks: {
+      Certificate: "/certificate/2026-yans-hackathon-committee-special-award.pdf",
       Publication: "/publications/kawada2026yans",
     },
   },

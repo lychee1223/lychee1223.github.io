@@ -208,7 +208,7 @@ export const newsItems: NewsItem[] = [
   },
   {
     date: "2026-08-11",
-    title: "🏆 Our paper was selected as a Best Paper Finalist at MIPR 2026!",
+    title: "🏆 Our paper was selected as a Best Paper Candidate at MIPR 2026!",
     items: [
       {
         title: "Document-Grounded Coaching Agent for Video Skill Assessment",
