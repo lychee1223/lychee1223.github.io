@@ -10,7 +10,7 @@ export const nec2025intern: ExperienceItem = {
     "Research Intern, Visual Intelligence Research Laboratories (now Cyber-Physical Intelligence Research Laboratories)",
   ],
   meta: [
-    "Related publications: ",
+    "Related Publications: ",
     { label: "DEIM 2026", href: "/publications/kawada2026deim" },
     ", ",
     { label: "MIPR 2026", href: "/publications/kawada2026document" },

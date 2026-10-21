@@ -127,6 +127,23 @@ body::before {
   background: rgba(59, 130, 246, 0.18);
 }
 
+.experience-history-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: radial-gradient(circle, #60a5fa 1.5px, transparent 1.75px) center
+    top / 4px 9px repeat-y;
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 95%);
+}
+
+details[open] > summary .experience-history-rail {
+  bottom: -1rem;
+  width: 1px;
+  background: var(--accent-soft);
+  mask-image: none;
+}
+
 .font-serif,
 .serif {
   font-family: var(--font-m-plus-2), system-ui, sans-serif;

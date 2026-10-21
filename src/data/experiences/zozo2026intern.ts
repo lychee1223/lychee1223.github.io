@@ -7,7 +7,7 @@ export const zozo2026contract: ExperienceItem = {
   organizationURL: "https://corp.zozo.com/",
   titles: ["Independent Contractor, ZOZO Research"],
   meta: [
-    "Related publications: ",
+    "Related Publications: ",
     { label: "YANS 2026", href: "/publications/kawada2026yans" },
   ],
 };
