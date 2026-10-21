@@ -1,16 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type TouchEvent,
+} from "react";
 
 export function useNavigationMenu() {
   const [isPublicationsOpen, setIsPublicationsOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobileMenuSwiping, setIsMobileMenuSwiping] = useState(false);
   const [mobileMenuSwipeOffset, setMobileMenuSwipeOffset] = useState(0);
   const publicationsMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
   const shouldSuppressNextClickRef = useRef(false);
   const mobileMenuSwipeStartXRef = useRef<number | null>(null);
+
+  const setIsMobileMenuOpen = useCallback((isOpen: boolean) => {
+    setMobileMenuOpen(isOpen);
+    if (!isOpen) {
+      setIsMobileMenuSwiping(false);
+      setMobileMenuSwipeOffset(0);
+      mobileMenuSwipeStartXRef.current = null;
+    }
+  }, []);
 
   useEffect(() => {
     function handleDocumentMouseDown(event: MouseEvent) {
@@ -42,7 +57,7 @@ export function useNavigationMenu() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [setIsMobileMenuOpen]);
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -120,7 +135,7 @@ export function useNavigationMenu() {
         touchOptions,
       );
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
@@ -128,16 +143,6 @@ export function useNavigationMenu() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      return;
-    }
-
-    setIsMobileMenuSwiping(false);
-    setMobileMenuSwipeOffset(0);
-    mobileMenuSwipeStartXRef.current = null;
   }, [isMobileMenuOpen]);
 
   function handleMobileMenuTouchStart(event: TouchEvent<HTMLDivElement>) {

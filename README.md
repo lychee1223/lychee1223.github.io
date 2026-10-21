@@ -1,251 +1,171 @@
-# Personal Website
+# [lychee1223.github.io](https://lychee1223.github.io/)
 
-Next.js 15 / React 19 / Tailwind CSS で作っているポートフォリオサイト
+[![Build, check, and deploy](https://github.com/lychee1223/lychee1223.github.io/actions/workflows/nextjs.yml/badge.svg?branch=main)](https://github.com/lychee1223/lychee1223.github.io/actions/workflows/nextjs.yml)
 
-## Setup
+Takuro Kawada's personal academic website published on GitHub Pages.
 
-依存関係をインストールして開発サーバを起動し, ブラウザで `http://localhost:3000` を確認
+## Run locally
+
+Use the Node.js 24 LTS version specified in [.nvmrc](.nvmrc). With [nvm](https://github.com/nvm-sh/nvm) installed:
 
 ```bash
-npm install
+nvm install
+nvm use
+npm ci
 npm run dev
 ```
 
-ビルド
+Open <http://localhost:3000>. Restart the development server after updating dependencies.
+
+## Check and build
 
 ```bash
+npm run check
 npm run build
+npm run links:check
 ```
 
-ロジックの回帰テスト（追加のテスト用依存関係は不要）
+The link commands require [lychee](https://lychee.cli.rs/). CI installs version 0.24.2; use the same version locally for matching results. Run them after building so they can inspect the generated `out/` directory.
 
-```bash
-npm test
-```
+| Command                  | Purpose                                                                 |
+| ------------------------ | ----------------------------------------------------------------------- |
+| `npm run check`          | Run lint, formatting checks, type checks, and tests                     |
+| `npm run lint`           | Check ESLint rules                                                      |
+| `npm run lint:fix`       | Apply automatic ESLint fixes                                            |
+| `npm run format:check`   | Check formatting without changing files                                 |
+| `npm run format`         | Format the repository with Prettier                                     |
+| `npm run typecheck`      | Generate Next.js route types and run TypeScript                         |
+| `npm run test:links`     | Run link-checker integration tests (requires lychee)                    |
+| `npm test`               | Run the Node.js regression tests                                        |
+| `npm run build`          | Export the site to `out/`                                               |
+| `npm run links:check`    | Check internal links, assets, and HTML anchors, plus local README links |
+| `npm run links:external` | Check external HTTP(S) links in the export and README                   |
+| `npm audit --omit=dev`   | Audit production dependencies                                           |
 
-リント
+Both development and production builds explicitly use Webpack because the metadata loaders use `require.context`. The published site consists of static files; GitHub Pages does not run a Node.js or PHP application server.
 
-```bash
-npm run lint
-npm run lint:fix
-npm run format
-```
+## Continuous integration and deployment
 
-## Project Structure
+[The workflow](.github/workflows/nextjs.yml) runs on pull requests to `main`, pushes to `main`, and manual dispatches.
 
-主要なファイル構成は以下の通り
+Before publishing, it checks lint, formatting, TypeScript, tests, production dependencies, the static build, and internal links. Failures in any of these checks stop deployment. Pull requests run the checks without deploying.
+
+External links are checked separately within the same build job. Failures produce a warning and a report, while deployment continues: a remote site may be temporarily unavailable, rate-limit requests, or block automated access. HTTP 403 and 429 responses are reported as failures rather than silently accepted.
+
+Link-check results appear in the workflow's job summary and the `link-check-reports` artifact, retained for seven days. Configuration lives in [.lychee/internal.toml](.lychee/internal.toml) and [.lychee/external.toml](.lychee/external.toml). Links to this site's own domain are checked against the new export, so unpublished pages are validated before they go live.
+
+Only successful checks on `main` can publish to GitHub Pages. The repository's Pages source must be set to **GitHub Actions**. If checks must also be required before merging, select the **Build and check** status in the repository's branch protection or ruleset settings.
+
+## Project structure
 
 ```text
 src/
-  app/
-    page.tsx
-    layout.tsx
-    globals.css
-    publications/
-      page.tsx
-      [slug]/
-        page.tsx
-  components/
-    home/
-    layout/
-    navigation/
-    publications/
+  app/                    Routes, layout, and global styles
+  components/             Home sections, navigation, and publication rendering
   data/
-    aboutme.ts
-    experience.ts
-    experiences/
-      <slug>.ts
-    publication.ts
+    aboutme.ts            Profile and contact details
+    authors.ts            Author names and profile URLs
+    experiences/          One TypeScript file per experience
     publications/
-      <category>/
-        <slug>/
-          metadata.ts
-          content.md
-    section-order.ts
-    title-description.ts
+      <category>/<slug>/
+        metadata.ts       Publication metadata
+        content.md        Optional detail-page content
+    news.ts               News entries
+    awards-grants.ts      Awards and grants
+    section-order.ts      Home section order
+  lib/                    Publication formatting, sorting, and filtering
+  utils/                  Date and metadata-loading helpers
 public/
   portrait.png
-  publications/
-    <slug>/
-      paper.pdf
-      poster.pdf
-      slides.pdf
+  publications/<slug>/    Papers, slides, posters, and other static assets
+scripts/                  News-entry and link-check commands
+tests/                    Node.js regression tests
 ```
 
-## 更新手順
+## Update content
 
-表示用の整形・並べ替えは `src/lib/publications.ts`、URL による絞り込みは `src/lib/publication-filters.ts` に置いています。`src/data/publication.ts` はメタデータの読み込みと一覧の提供を担当し、クライアント側の画面にはサーバーから必要な一覧を渡します。
+### Profile and home sections
 
-News の各行は `src/components/news/news-entry.tsx`、ホームの一覧末尾は `src/components/home/section-list-footer.tsx` を共用しています。ナビゲーションの操作は `use-navigation-menu.ts`、受賞バッジのタッチ操作は `award-badge-interactions.tsx` に分けています。
+Edit [src/data/aboutme.ts](src/data/aboutme.ts) for the biography, affiliations, contact details, interests, and profile image. The `AboutMe` interface in that file lists the supported fields.
 
-### プロフィールを変更する
+Edit [src/data/section-order.ts](src/data/section-order.ts) to reorder the home sections. Section headings and descriptions live in the corresponding components under `src/components/home/sections/`.
 
-1. プロフィール情報を `src/data/aboutme.ts` に記述
+### Publications, talks, and articles
 
-| Column                | Type       | Required | Description                                                                |
-| --------------------- | ---------- | -------- | -------------------------------------------------------------------------- |
-| `name`                | `string`   | yes      | 氏名                                                                       |
-| `title`               | `string`   | yes      | 現在の肩書き                                                               |
-| `institution`         | `string`   | yes      | 所属機関名                                                                 |
-| `institutionURL`      | `string`   | no       | 所属機関の HP の URL                                                       |
-| `institutionAddress`  | `string`   | no       | 所属機関の住所                                                             |
-| `laboratoryName`      | `string`   | no       | 研究室名                                                                   |
-| `laboratoryURL`       | `string`   | no       | 研究室の HP の URL                                                         |
-| `email`               | `string`   | yes      | メールアドレス                                                             |
-| `googleScholarURL`    | `string`   | no       | Google Scholar の URL                                                      |
-| `githubUsername`      | `string`   | no       | GitHub のユーザー名                                                        |
-| `linkedinUsername`    | `string`   | no       | LinkedIn のユーザー名                                                      |
-| `twitterUsername`     | `string`   | no       | X / Twitter のユーザー名                                                   |
-| `description`         | `string`   | yes      | Biography セクションに表示する自己紹介文                                   |
-| `interests`           | `string[]` | no       | Biography セクションの Interests に表示する研究関心などのリスト            |
-| `biographyHighlights` | `string[]` | no       | Biography セクションの Personality Traits に表示する補足説明. 先頭は絵文字 |
-
-### Publication を追加する
-
-1. Publication データを `src/data/publications/<category>/<slug>/metadata.ts` に記述
-2. 詳細ページへ追記したい本文を `content.md` に記述
-3. PDF などの静的ファイルを `public/publications/<slug>/` に配置
-
-Publication の主なカラムは以下の通り
-
-| Column           | Type                  | Required | Description                                   |
-| ---------------- | --------------------- | -------- | --------------------------------------------- |
-| `slug`           | `string`              | yes      | 詳細ページURLと静的ファイル配置に使う一意なID |
-| `title`          | `string`              | yes      | タイトル                                      |
-| `authors`        | `PublicationAuthor[]` | no       | 著者. `equalContribution` も指定可能          |
-| `date`           | `string`              | yes      | `YYYY-MM-DD` 形式の日付                       |
-| `category`       | `PublicationCategory` | yes      | カテゴリ                                      |
-| `venueFull`      | `string`              | no       | 会議名やイベント名の正式名称                  |
-| `venueShort`     | `string`              | no       | 会議名やイベント名の短縮表記                  |
-| `venueURL`       | `string`              | no       | 会議やイベントの URL                          |
-| `keywords`       | `string[]`            | no       | キーワード                                    |
-| `awards`         | `string[]`            | no       | 受賞情報                                      |
-| `acceptanceRate` | `string`              | no       | 採択率（例: `34.7%`）                         |
-| `abstract`       | `string`              | no       | 概要                                          |
-| `relatedLinks`   | `RelatedLinks`        | no       | Paper、Poster、Slides、arXiv などの関連リンク |
-
-`category` に指定できる値は以下の通り
-
-| Value                      | Description |
-| -------------------------- | ----------- |
-| `international-conference` | 国際会議    |
-| `domestic-conference`      | 国内会議    |
-| `preprint`                 | Preprint    |
-| `article`                  | 記事        |
-| `talk`                     | 登壇/講演   |
-
-`relatedLinks` には固定キーを使います。主なキーは `ProjectPage`, `arXiv`, `Paper`, `Slides`, `Poster`, `Code`, `Dataset`, `Article`, `SpeakerDeck` です。表示時には `ProjectPage` は `Project Page`、`SpeakerDeck` は `Speaker Deck` のように整形されます。
-
-例:
+1. Add `src/data/publications/<category>/<slug>/metadata.ts` with a named or default export matching the `Publication` type.
+2. Optionally add `content.md` beside it for the detail page.
+3. Place local files under `public/publications/<slug>/` and link to them as `/publications/<slug>/...`.
 
 ```typescript
 import type { Publication } from "@/data/publication";
 
-export const kawada2026sciga: Publication = {
-  slug: "kawada2026sciga",
-  title: "SciGA: A Comprehensive ...",
-  authors: [
-    { name: "Takuro Kawada", equalContribution: true },
-    { name: "Shunsuke Kitada", equalContribution: true },
-    { name: "Sota Nemoto" },
-    { name: "Hitoshi Iyatomi" },
-  ],
-  date: "2026-06-03",
-  category: "international-conference",
-  venueFull: "the 2026 IEEE/CVF ...",
-  venueShort: "CVPRF 2026",
-  venueURL: "https://...",
-  keywords: ["Natural Language Processing", ...],
-  abstract: "Graphical Abstracts (GAs) play ...",
+export const example: Publication = {
+  slug: "my-publication",
+  title: "Publication title",
+  authors: [{ name: "Takuro Kawada" }],
+  date: "2026-10-22",
+  category: "domestic-conference",
+  venueShort: "Conference 2026",
   relatedLinks: {
-    Paper: "https://openaccess.thecvf.com/...",
-    ProjectPage: "https://...",
-    arXiv: "https://arxiv.org/abs/2507.02212",
+    Slides: "/publications/my-publication/slides.pdf",
   },
 };
 ```
 
-### Experience を追加する
+Supported categories are `international-conference`, `domestic-conference`, `preprint`, `article`, and `talk`. See [src/lib/publications.ts](src/lib/publications.ts) for the full schema, including equal-contribution authors, abstracts, awards, keywords, and related links.
 
-1. Experience データを `src/data/experiences/<slug>.ts` に記述
+A standalone Markdown link to a PDF in `content.md` renders as an embedded viewer:
 
-Experience の主なカラムは以下の通り
+```markdown
+[Presentation slides](/publications/my-publication/slides.pdf)
+```
 
-| Column            | Type       | Required | Description                                                 |
-| ----------------- | ---------- | -------- | ----------------------------------------------------------- |
-| `slug`            | `string`   | yes      | 一意なID                                                    |
-| `start`           | `string`   | yes      | 開始年月。`YYYY` / `YYYY-MM`                                |
-| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示される             |
-| `organization`    | `string`   | yes      | 大学、企業、組織名                                          |
-| `organizationURL` | `string`   | no       | 組織へのリンクURL                                           |
-| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示される |
-| `meta`            | `string[]` | no       | 補足メタ情報                                                |
+The viewer loads as it approaches the viewport. Ordinary inline links remain links.
 
-例:
+### Experience
+
+Add a TypeScript file under `src/data/experiences/` exporting an `ExperienceItem` as defined in [src/data/experience.ts](src/data/experience.ts).
 
 ```typescript
 import type { ExperienceItem } from "@/data/experience";
 
-export const hosei2025master: ExperienceItem = {
-  slug: "hosei2025master",
-  start: "2025",
-  organization: "Hosei University",
-  organizationURL: "https://www.hosei.ac.jp/",
-  titles: ["M.Eng. Student"],
-  meta: ["Advisor: Prof. Hitoshi Iyatomi"],
+export const example: ExperienceItem = {
+  slug: "example-position",
+  start: "2026-04",
+  organization: "Example University",
+  titles: ["Research Assistant"],
 };
 ```
 
-### News を追加する
+Use `YYYY` or `YYYY-MM` dates. Omit `end` for an ongoing position. Optional metadata can be plain text or a `{ label, href }` link.
 
-1. `src/data/news.ts` にニュース一覧を記述  
-   CLI を叩いて自動で追加することも可能
+### News
 
-例
-
-```typescript
-export const newsItems: NewsItem[] = [
-  {
-    date: "2026-08-09",
-    title: "🎉 Our paper has been accepted to CVPRF 2026!",
-    items: [
-      {
-        title:
-          "SciGA: A Comprehensive Dataset for Designing Graphical Abstracts in Academic Papers",
-        href: "/publications/kawada2026sciga",
-      },
-    ],
-  },
-];
-```
+Edit [src/data/news.ts](src/data/news.ts), or use the CLI:
 
 ```bash
-# 会議名からニュースを追加
+# Create a publication announcement from a venue name.
 npm run news:add -- venue "MIPR 2026"
 
-# talk の slug からニュースを追加
+# Create an announcement from a talk's slug.
 npm run news:add -- talk kawada2026ai4science
 
-# 完全に手動のニュースを追加
-npm run news:add -- manual 2026-08-09 "Custom news title!" "Item title" "/publications/slug"
+# Add a manual announcement: date, title, item title, and destination.
+npm run news:add -- manual 2026-10-22 "Research update" "SciGA" "/publications/kawada2026sciga"
 ```
 
-### Awards & Grants を追加する
+### Awards and grants
 
-1. `src/data/awards-grants.ts` に受賞内容一覧を記述
+Edit [src/data/awards-grants.ts](src/data/awards-grants.ts). Each entry can include a date, title, description, received items, and related links. Keep certificates and other local assets under `public/`.
 
-```typescript
-const awardGrantItems: AwardGrantItem[] = [
-  {
-    title: "I received the Student Presentation Award at DEIM 2026.",
-    date: "2026-03-05",
-    description: "Awarded for the presentation on ...",
-    receivedItems: ["50,000 JPY"],
-    relatedLinks: {
-      Certificate: "/certificate/2026-deim-student-presentation-award.pdf",
-      Article: "https://...",
-      Publication: "/publications/kawada2026deim",
-    },
-  },
-];
-```
+## Dependency maintenance
+
+Use `npm audit` to inspect all dependencies. The `overrides` in [package.json](package.json) keep KaTeX and the CSS selector parser on patched versions.
+
+As of October 22, 2026, the production dependency audit reports no known vulnerabilities. The full audit still reports seven development/build dependency warnings originating from an [unpatched denial-of-service issue in braces](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm). These packages process repository file patterns during development and builds; they do not run on the published static site.
+
+## Acknowledgements and license
+
+Based on [research-website-template](https://github.com/tovacinni/research-website-template).
+
+The code is available under the [MIT license](LICENSE). Replace the personal information and publication content before reusing this site.

@@ -1,0 +1,7 @@
+# Resolve links against the export, including extensionless GitHub Pages URLs.
+offline = true
+root_dir = "./out"
+fallback_extensions = ["html"]
+index_files = ["index.html"]
+include_fragments = "anchor-only"
+no_progress = true

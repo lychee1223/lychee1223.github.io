@@ -1,0 +1,15 @@
+# Network checks are advisory: external sites can reject bots or be unavailable.
+scheme = ["http", "https"]
+# Resolve root-relative references before excluding local files from this scan.
+root_dir = "./out"
+exclude_all_private = true
+timeout = 20
+max_retries = 2
+retry_wait_time = 2
+max_concurrency = 8
+host_concurrency = 2
+no_progress = true
+
+# The internal check validates this site's URLs against the new export.
+# Checking production here would report new, not-yet-deployed pages as missing.
+exclude = ['^https?://lychee1223\.github\.io(?:[/?#]|$)']

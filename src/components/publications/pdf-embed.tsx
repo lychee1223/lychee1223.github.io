@@ -35,6 +35,8 @@ export function PdfEmbed(props: PdfEmbedProps) {
     }
 
     if (typeof IntersectionObserver === "undefined") {
+      // Browser capability detection must happen after hydration.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShouldLoad(true);
       return;
     }
@@ -55,7 +57,11 @@ export function PdfEmbed(props: PdfEmbedProps) {
 
   return (
     <div ref={containerRef}>
-      {shouldLoad ? <PdfViewer {...props} /> : <PdfLoadingPlaceholder />}
+      {shouldLoad ? (
+        <PdfViewer key={props.src} {...props} />
+      ) : (
+        <PdfLoadingPlaceholder />
+      )}
     </div>
   );
 }

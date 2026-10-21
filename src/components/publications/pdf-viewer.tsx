@@ -28,11 +28,6 @@ export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   useEffect(() => {
-    setPageNumber(1);
-    setPageCount(0);
-  }, [src]);
-
-  useEffect(() => {
     const element = containerRef.current;
 
     if (!element) {
