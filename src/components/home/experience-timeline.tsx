@@ -1,6 +1,6 @@
+import { formatExperiencePeriod } from "@/utils/date";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import {
-  formatExperiencePeriod,
   type ExperienceItem,
   type ExperienceMetaContent,
 } from "@/data/experience";

@@ -1,93 +1,18 @@
 "use client";
 
-import { PublicationEntry } from "@/components/publications/publication-entry";
-import { getAuthors } from "@/components/publications/render-authors";
-import {
-  isTalkOrArticle,
-  publicationMatchesVenue,
-  sortedPublicationData,
-} from "@/data/publication";
 import { useSearchParams } from "next/navigation";
+import { PublicationEntry } from "@/components/publications/publication-entry";
+import { getPublicationFilter } from "@/lib/publication-filters";
+import type { PublicationListItem } from "@/lib/publications";
 
-type PublicationFilterCategory =
-  | "international-conference"
-  | "domestic-conference"
-  | "preprint"
-  | "article"
-  | "talk"
-  | "talks-articles"
-  | "material";
-
-function getCategoryParam(value: string | null) {
-  if (
-    value === "international-conference" ||
-    value === "domestic-conference" ||
-    value === "preprint" ||
-    value === "article" ||
-    value === "talk" ||
-    value === "talks-articles" ||
-    value === "material"
-  ) {
-    return value satisfies PublicationFilterCategory;
-  }
-
-  return undefined;
-}
-
-export function PublicationsClientPage() {
+export function PublicationsClientPage({
+  publications,
+}: {
+  publications: PublicationListItem[];
+}) {
   const searchParams = useSearchParams();
-  const author = searchParams.get("author") ?? undefined;
-  const category = getCategoryParam(searchParams.get("category"));
-  const keyword = searchParams.get("keyword") ?? undefined;
-  const venue = searchParams.get("venue") ?? undefined;
-  const isTalkArticleFilter =
-    category === "talks-articles" || category === "material";
-
-  const filteredPublications = sortedPublicationData.filter((publication) => {
-    if (author) {
-      return publication.authors
-        ? getAuthors(publication.authors).includes(author)
-        : false;
-    }
-
-    if (category) {
-      if (isTalkArticleFilter) {
-        return isTalkOrArticle(publication);
-      }
-
-      return publication.category === category;
-    }
-
-    if (keyword) {
-      return publication.keywords?.includes(keyword);
-    }
-
-    if (venue) {
-      return publicationMatchesVenue(publication, venue);
-    }
-
-    return true;
-  });
-
-  const filterLabel = author
-    ? `Author: ${author}`
-    : category === "international-conference"
-      ? "Category: International Conferences"
-      : category === "domestic-conference"
-        ? "Category: Domestic Conferences"
-        : category === "preprint"
-          ? "Category: Preprints"
-          : category === "article"
-            ? "Category: Articles"
-            : category === "talk"
-              ? "Category: Talks"
-              : isTalkArticleFilter
-                ? "Category: Talks & Articles"
-                : keyword
-                  ? `Keyword: ${keyword}`
-                  : venue
-                    ? `Venue: ${venue}`
-                    : "All Publications";
+  const filter = getPublicationFilter(searchParams);
+  const filteredPublications = publications.filter(filter.matches);
 
   return (
     <div className="min-h-screen bg-transparent">
@@ -96,7 +21,7 @@ export function PublicationsClientPage() {
           <h1 className="font-serif text-3xl font-bold leading-snug text-zinc-900 mb-3">
             Publications
           </h1>
-          <p className="text-sm text-zinc-700 mb-12">{filterLabel}</p>
+          <p className="text-sm text-zinc-700 mb-12">{filter.label}</p>
 
           {filteredPublications.length > 0 ? (
             <div className="space-y-9">

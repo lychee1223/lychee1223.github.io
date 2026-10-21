@@ -2,8 +2,7 @@ import type { Publication } from "@/data/publication";
 
 export const chan2026yans: Publication = {
   slug: "chan2026yans",
-  title:
-    "Where Do Vision-Language Models Preserve and Use Depth Information?",
+  title: "Where Do Vision-Language Models Preserve and Use Depth Information?",
   authors: [
     { name: "Kunfan Chan" },
     { name: "Takuro Kawada" },

@@ -66,3 +66,27 @@ export function formatYearMonthDate(
 
   return `${monthNames[monthIndex]} ${year}`;
 }
+
+export function getDateSortValue(date: string) {
+  const normalizedDate = Number(date.replaceAll("-", ""));
+
+  return Number.isNaN(normalizedDate) ? 0 : normalizedDate;
+}
+
+function formatExperienceDateValue(value: string) {
+  return formatYearMonthDate(value, { allowYearOnly: true }) ?? value;
+}
+
+export function formatExperiencePeriod(start: string, end?: string) {
+  const formattedStart = formatExperienceDateValue(start);
+
+  if (!end) {
+    return `${formattedStart} - Present`;
+  }
+
+  if (start === end) {
+    return formattedStart;
+  }
+
+  return `${formattedStart} - ${formatExperienceDateValue(end)}`;
+}

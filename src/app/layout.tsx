@@ -3,6 +3,7 @@ import { Geist_Mono, M_PLUS_2 } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import { aboutMe } from "@/data/aboutme";
+import { AwardBadgeInteractions } from "@/components/publications/award-badge-interactions";
 import { SiteHeader } from "@/components/layout/site-header";
 
 const geistMono = Geist_Mono({
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${mPlus2.variable} ${geistMono.variable} antialiased`}>
         <SiteHeader />
+        <AwardBadgeInteractions />
         <main className="pt-[5.5rem] md:pt-[6.5rem]">{children}</main>
         <footer className="border-t border-[color:var(--line-strong)] bg-[color:var(--page-bg)]">
           <div className="mx-auto flex max-w-screen-xl flex-col gap-4 px-5 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">

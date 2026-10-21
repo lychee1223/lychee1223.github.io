@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
+import { PdfLoadingPlaceholder } from "@/components/publications/pdf-loading-placeholder";
 
 interface PdfEmbedProps {
   src: string;
@@ -14,12 +16,46 @@ const PdfViewer = dynamic(
     ),
   {
     ssr: false,
-    loading: () => (
-      <p className="publication-pdf-status">Loading PDF viewer...</p>
-    ),
+    loading: PdfLoadingPlaceholder,
   },
 );
 
 export function PdfEmbed(props: PdfEmbedProps) {
-  return <PdfViewer {...props} />;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (shouldLoad) {
+      return;
+    }
+
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  return (
+    <div ref={containerRef}>
+      {shouldLoad ? <PdfViewer {...props} /> : <PdfLoadingPlaceholder />}
+    </div>
+  );
 }

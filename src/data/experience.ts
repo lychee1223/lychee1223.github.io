@@ -1,4 +1,4 @@
-import { formatYearMonthDate } from "@/utils/date";
+import { getDataFileExport } from "@/utils/data-files";
 
 export type ExperienceMetaContent =
   | string
@@ -15,39 +15,6 @@ export interface ExperienceItem {
   organizationURL?: string;
   titles: string[];
   meta?: ExperienceMetaContent[];
-}
-
-type DataFileModule<T> = {
-  default?: T;
-} & Record<string, unknown>;
-
-type DataFileContext<T> = {
-  keys(): string[];
-  (id: string): DataFileModule<T>;
-};
-
-declare const require: {
-  context<T>(
-    directory: string,
-    useSubdirectories?: boolean,
-    regExp?: RegExp,
-  ): DataFileContext<T>;
-};
-
-function getDataFileExport<T extends object>(module: DataFileModule<T>) {
-  if (module.default) {
-    return module.default;
-  }
-
-  const namedExport = Object.values(module).find(
-    (value): value is T => typeof value === "object" && value !== null,
-  );
-
-  if (!namedExport) {
-    throw new Error("Experience data file must export an object.");
-  }
-
-  return namedExport;
 }
 
 const experienceFileContext = require.context<ExperienceItem>(
@@ -71,24 +38,6 @@ function getExperienceDateSortValue(value?: string) {
   const month = match[2] ? Number(match[2]) : 1;
 
   return year * 100 + month;
-}
-
-function formatExperienceDateValue(value: string) {
-  return formatYearMonthDate(value, { allowYearOnly: true }) ?? value;
-}
-
-export function formatExperiencePeriod(start: string, end?: string) {
-  const formattedStart = formatExperienceDateValue(start);
-
-  if (!end) {
-    return `${formattedStart} - Present`;
-  }
-
-  if (start === end) {
-    return formattedStart;
-  }
-
-  return `${formattedStart} - ${formatExperienceDateValue(end)}`;
 }
 
 export const experienceData: ExperienceItem[] = experienceFileContext

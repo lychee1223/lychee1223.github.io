@@ -8,7 +8,7 @@ import {
   GraduationCap,
   Map,
 } from "lucide-react";
-import { AboutMe } from "@/data/aboutme";
+import type { AboutMe } from "@/data/aboutme";
 
 interface ProfileSidebarProps {
   aboutMe: AboutMe;
@@ -128,7 +128,7 @@ export function ProfileSidebar({ aboutMe }: ProfileSidebarProps) {
                 Researchmap
               </a>
             </>
-          )}          
+          )}
           {aboutMe.googleScholarURL && (
             <>
               <br />

@@ -2,8 +2,7 @@ import type { Publication } from "@/data/publication";
 
 export const sutoh2026yans: Publication = {
   slug: "sutoh2026yans",
-  title:
-    "視覚言語モデルと病徴属性を用いた植物病害診断手法の検討",
+  title: "視覚言語モデルと病徴属性を用いた植物病害診断手法の検討",
   authors: [
     { name: "Mizuki Sutoh" },
     { name: "Tatsuki Azegami" },

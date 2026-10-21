@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import { PublicationEntry } from "@/components/publications/publication-entry";
-import { SectionSeeAllLink } from "@/components/home/section-see-all-link";
+import { SectionListFooter } from "@/components/home/section-list-footer";
 import { SectionHeading } from "@/components/home/section-heading";
-import type { Publication } from "@/data/publication";
+import type { Publication } from "@/lib/publications";
 
 interface PublicationSectionProps {
   id: string;
@@ -9,6 +10,7 @@ interface PublicationSectionProps {
   eyebrow: string;
   publications: Publication[];
   seeAllHref: string;
+  emptyState?: ReactNode;
 }
 
 export function PublicationSection({
@@ -17,34 +19,33 @@ export function PublicationSection({
   eyebrow,
   publications,
   seeAllHref,
+  emptyState,
 }: PublicationSectionProps) {
-  if (publications.length === 0) {
+  if (publications.length === 0 && !emptyState) {
     return null;
   }
 
   const featuredPublications = publications.slice(0, 5);
-  const hasMorePublications = publications.length > featuredPublications.length;
 
   return (
     <section id={id} className="min-w-0 max-w-full">
       <SectionHeading eyebrow={eyebrow} title={title} />
-      <div className="min-w-0 max-w-full divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
-        {featuredPublications.map((publication) => (
-          <div key={publication.slug} className="py-2">
-            <PublicationEntry publication={publication} />
-          </div>
-        ))}
-      </div>
-      {hasMorePublications && (
-        <div className="pt-4">
-          <div className="flex min-w-0 items-start justify-between gap-3 sm:items-center">
-            <p className="min-w-0 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
-              Latest {featuredPublications.length} of {publications.length}
-            </p>
-            <SectionSeeAllLink href={seeAllHref} />
-          </div>
+      {featuredPublications.length > 0 ? (
+        <div className="min-w-0 max-w-full divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+          {featuredPublications.map((publication) => (
+            <div key={publication.slug} className="py-2">
+              <PublicationEntry publication={publication} />
+            </div>
+          ))}
         </div>
+      ) : (
+        emptyState
       )}
+      <SectionListFooter
+        shownCount={featuredPublications.length}
+        totalCount={publications.length}
+        href={seeAllHref}
+      />
     </section>
   );
 }

@@ -17,6 +17,12 @@ npm run dev
 npm run build
 ```
 
+ロジックの回帰テスト（追加のテスト用依存関係は不要）
+
+```bash
+npm test
+```
+
 リント
 
 ```bash
@@ -68,6 +74,10 @@ public/
 
 ## 更新手順
 
+表示用の整形・並べ替えは `src/lib/publications.ts`、URL による絞り込みは `src/lib/publication-filters.ts` に置いています。`src/data/publication.ts` はメタデータの読み込みと一覧の提供を担当し、クライアント側の画面にはサーバーから必要な一覧を渡します。
+
+News の各行は `src/components/news/news-entry.tsx`、ホームの一覧末尾は `src/components/home/section-list-footer.tsx` を共用しています。ナビゲーションの操作は `use-navigation-menu.ts`、受賞バッジのタッチ操作は `award-badge-interactions.tsx` に分けています。
+
 ### プロフィールを変更する
 
 1. プロフィール情報を `src/data/aboutme.ts` に記述
@@ -75,20 +85,20 @@ public/
 | Column                | Type       | Required | Description                                                                |
 | --------------------- | ---------- | -------- | -------------------------------------------------------------------------- |
 | `name`                | `string`   | yes      | 氏名                                                                       |
-| `title`               | `string`   | yes      | 現在の肩書き                                                                |
-| `institution`         | `string`   | yes      | 所属機関名                                                                  |
-| `institutionURL`      | `string`   | no       | 所属機関の HP の URL                                                        |
-| `institutionAddress`  | `string`   | no       | 所属機関の住所                                                              |
+| `title`               | `string`   | yes      | 現在の肩書き                                                               |
+| `institution`         | `string`   | yes      | 所属機関名                                                                 |
+| `institutionURL`      | `string`   | no       | 所属機関の HP の URL                                                       |
+| `institutionAddress`  | `string`   | no       | 所属機関の住所                                                             |
 | `laboratoryName`      | `string`   | no       | 研究室名                                                                   |
-| `laboratoryURL`       | `string`   | no       | 研究室の HP の URL                                                          |
-| `email`               | `string`   | yes      | メールアドレス                                                              |
+| `laboratoryURL`       | `string`   | no       | 研究室の HP の URL                                                         |
+| `email`               | `string`   | yes      | メールアドレス                                                             |
 | `googleScholarURL`    | `string`   | no       | Google Scholar の URL                                                      |
 | `githubUsername`      | `string`   | no       | GitHub のユーザー名                                                        |
 | `linkedinUsername`    | `string`   | no       | LinkedIn のユーザー名                                                      |
 | `twitterUsername`     | `string`   | no       | X / Twitter のユーザー名                                                   |
-| `description`         | `string`   | yes      | Biography セクションに表示する自己紹介文                                     |
-| `interests`           | `string[]` | no       | Biography セクションの Interests に表示する研究関心などのリスト               |
-| `biographyHighlights` | `string[]` | no       | Biography セクションの Personality Traits に表示する補足説明. 先頭は絵文字    |
+| `description`         | `string`   | yes      | Biography セクションに表示する自己紹介文                                   |
+| `interests`           | `string[]` | no       | Biography セクションの Interests に表示する研究関心などのリスト            |
+| `biographyHighlights` | `string[]` | no       | Biography セクションの Personality Traits に表示する補足説明. 先頭は絵文字 |
 
 ### Publication を追加する
 
@@ -98,31 +108,31 @@ public/
 
 Publication の主なカラムは以下の通り
 
-| Column         | Type                  | Required | Description                                   |
-| -------------- | --------------------- | -------- | --------------------------------------------- |
-| `slug`         | `string`              | yes      | 詳細ページURLと静的ファイル配置に使う一意なID     |
-| `title`        | `string`              | yes      | タイトル                                       |
-| `authors`      | `PublicationAuthor[]` | no       | 著者. `equalContribution` も指定可能           |
-| `date`         | `string`              | yes      | `YYYY-MM-DD` 形式の日付                        |
-| `category`     | `PublicationCategory` | yes      | カテゴリ                                      |
-| `venueFull`    | `string`              | no       | 会議名やイベント名の正式名称                    |
-| `venueShort`   | `string`              | no       | 会議名やイベント名の短縮表記                    |
-| `venueURL`     | `string`              | no       | 会議やイベントの URL                           |
-| `keywords`     | `string[]`            | no       | キーワード                                    |
-| `awards`       | `string[]`            | no       | 受賞情報                                      |
-| `acceptanceRate` | `string`            | no       | 採択率（例: `34.7%`）                         |
-| `abstract`     | `string`              | no       | 概要                                         |
-| `relatedLinks` | `RelatedLinks`        | no       | Paper、Poster、Slides、arXiv などの関連リンク  |
+| Column           | Type                  | Required | Description                                   |
+| ---------------- | --------------------- | -------- | --------------------------------------------- |
+| `slug`           | `string`              | yes      | 詳細ページURLと静的ファイル配置に使う一意なID |
+| `title`          | `string`              | yes      | タイトル                                      |
+| `authors`        | `PublicationAuthor[]` | no       | 著者. `equalContribution` も指定可能          |
+| `date`           | `string`              | yes      | `YYYY-MM-DD` 形式の日付                       |
+| `category`       | `PublicationCategory` | yes      | カテゴリ                                      |
+| `venueFull`      | `string`              | no       | 会議名やイベント名の正式名称                  |
+| `venueShort`     | `string`              | no       | 会議名やイベント名の短縮表記                  |
+| `venueURL`       | `string`              | no       | 会議やイベントの URL                          |
+| `keywords`       | `string[]`            | no       | キーワード                                    |
+| `awards`         | `string[]`            | no       | 受賞情報                                      |
+| `acceptanceRate` | `string`              | no       | 採択率（例: `34.7%`）                         |
+| `abstract`       | `string`              | no       | 概要                                          |
+| `relatedLinks`   | `RelatedLinks`        | no       | Paper、Poster、Slides、arXiv などの関連リンク |
 
 `category` に指定できる値は以下の通り
 
 | Value                      | Description |
 | -------------------------- | ----------- |
-| `international-conference` | 国際会議     |
-| `domestic-conference`      | 国内会議     |
+| `international-conference` | 国際会議    |
+| `domestic-conference`      | 国内会議    |
 | `preprint`                 | Preprint    |
 | `article`                  | 記事        |
-| `talk`                     | 登壇/講演    |
+| `talk`                     | 登壇/講演   |
 
 `relatedLinks` には固定キーを使います。主なキーは `ProjectPage`, `arXiv`, `Paper`, `Slides`, `Poster`, `Code`, `Dataset`, `Article`, `SpeakerDeck` です。表示時には `ProjectPage` は `Project Page`、`SpeakerDeck` は `Speaker Deck` のように整形されます。
 
@@ -161,15 +171,15 @@ export const kawada2026sciga: Publication = {
 
 Experience の主なカラムは以下の通り
 
-| Column            | Type       | Required | Description                                             |
-| ----------------- | ---------- | -------- | --------------------------------------------------------|
-| `slug`            | `string`   | yes      | 一意なID                                                 |
-| `start`           | `string`   | yes      | 開始年月。`YYYY` / `YYYY-MM`                             |
-| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示される            |
-| `organization`    | `string`   | yes      | 大学、企業、組織名                                        |
-| `organizationURL` | `string`   | no       | 組織へのリンクURL                                        |
-| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示される  |
-| `meta`            | `string[]` | no       | 補足メタ情報                                             |
+| Column            | Type       | Required | Description                                                 |
+| ----------------- | ---------- | -------- | ----------------------------------------------------------- |
+| `slug`            | `string`   | yes      | 一意なID                                                    |
+| `start`           | `string`   | yes      | 開始年月。`YYYY` / `YYYY-MM`                                |
+| `end`             | `string`   | no       | 終了年月。未指定の場合は `Present` と表示される             |
+| `organization`    | `string`   | yes      | 大学、企業、組織名                                          |
+| `organizationURL` | `string`   | no       | 組織へのリンクURL                                           |
+| `titles`          | `string[]` | yes      | 学位、役職、職種など。複数ある場合は `/` 区切りで表示される |
+| `meta`            | `string[]` | no       | 補足メタ情報                                                |
 
 例:
 
@@ -189,10 +199,10 @@ export const hosei2025master: ExperienceItem = {
 ### News を追加する
 
 1. `src/data/news.ts` にニュース一覧を記述  
-CLI を叩いて自動で追加することも可能
-
+   CLI を叩いて自動で追加することも可能
 
 例
+
 ```typescript
 export const newsItems: NewsItem[] = [
   {
@@ -200,7 +210,8 @@ export const newsItems: NewsItem[] = [
     title: "🎉 Our paper has been accepted to CVPRF 2026!",
     items: [
       {
-        title: "SciGA: A Comprehensive Dataset for Designing Graphical Abstracts in Academic Papers",
+        title:
+          "SciGA: A Comprehensive Dataset for Designing Graphical Abstracts in Academic Papers",
         href: "/publications/kawada2026sciga",
       },
     ],
@@ -218,8 +229,6 @@ npm run news:add -- talk kawada2026ai4science
 # 完全に手動のニュースを追加
 npm run news:add -- manual 2026-08-09 "Custom news title!" "Item title" "/publications/slug"
 ```
-
-
 
 ### Awards & Grants を追加する
 

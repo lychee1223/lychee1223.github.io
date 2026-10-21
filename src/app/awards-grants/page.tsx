@@ -18,7 +18,6 @@ export default function AwardsGrantsPage() {
               <AwardGrantEntry
                 key={`${item.date}-${item.title}-${index}`}
                 item={item}
-                index={index}
               />
             ))}
           </div>

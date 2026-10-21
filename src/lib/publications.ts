@@ -1,0 +1,246 @@
+import { formatYearMonthDate, getDateSortValue } from "@/utils/date";
+import { ownAuthorName } from "@/data/authors";
+
+export const relatedLinkKeys = [
+  "ProjectPage",
+  "arXiv",
+  "Paper",
+  "Slides",
+  "Poster",
+  "Code",
+  "Dataset",
+  "Article",
+  "SpeakerDeck",
+] as const;
+
+export type RelatedLinkKey = (typeof relatedLinkKeys)[number];
+
+export const relatedLinkText: Record<RelatedLinkKey, string> = {
+  ProjectPage: "Project Page",
+  arXiv: "arXiv",
+  Paper: "Paper",
+  Slides: "Slides",
+  Poster: "Poster",
+  Code: "Code",
+  Dataset: "Dataset",
+  Article: "Article",
+  SpeakerDeck: "Speaker Deck",
+};
+
+export interface RelatedLink {
+  key: RelatedLinkKey;
+  label: string;
+  url: string;
+}
+
+export type RelatedLinks = Partial<Record<RelatedLinkKey, string>>;
+
+export interface PublicationAuthor {
+  name: string;
+  equalContribution?: boolean;
+}
+
+export type PublicationCategory =
+  | "international-conference"
+  | "domestic-conference"
+  | "preprint"
+  | "article"
+  | "talk";
+
+export interface Publication {
+  slug: string;
+  title: string;
+  authors?: PublicationAuthor[];
+  date: string;
+  category: PublicationCategory;
+  venueFull?: string;
+  venueShort?: string;
+  venueURL?: string;
+  keywords?: string[];
+  awards?: string[];
+  acceptanceRate?: string;
+  abstract?: string;
+  relatedLinks?: RelatedLinks;
+}
+
+export type PublicationListItem = Pick<
+  Publication,
+  | "slug"
+  | "title"
+  | "date"
+  | "category"
+  | "authors"
+  | "venueFull"
+  | "venueShort"
+  | "keywords"
+  | "awards"
+>;
+
+export function toPublicationListItem({
+  slug,
+  title,
+  date,
+  category,
+  authors,
+  venueFull,
+  venueShort,
+  keywords,
+  awards,
+}: Publication): PublicationListItem {
+  return {
+    slug,
+    title,
+    date,
+    category,
+    authors,
+    venueFull,
+    venueShort,
+    keywords,
+    awards,
+  };
+}
+
+function getOwnAuthorPriority(publication: Publication) {
+  const authors = publication.authors ?? [];
+  const ownAuthorIndex = authors.findIndex(
+    (author) => author.name === ownAuthorName,
+  );
+
+  if (ownAuthorIndex === -1) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  if (ownAuthorIndex === 0) {
+    return 0;
+  }
+
+  const isLeadEqualContribution =
+    authors[0]?.equalContribution === true &&
+    authors
+      .slice(0, ownAuthorIndex + 1)
+      .every((author) => author.equalContribution);
+
+  return isLeadEqualContribution ? 1 : ownAuthorIndex + 1;
+}
+
+function isSamePublicationVenue(left: Publication, right: Publication) {
+  return (
+    (left.venueShort !== undefined && left.venueShort === right.venueShort) ||
+    (left.venueFull !== undefined && left.venueFull === right.venueFull)
+  );
+}
+
+export function sortPublications(publications: Publication[]) {
+  return [...publications].sort((left, right) => {
+    const dateDifference =
+      getDateSortValue(right.date) - getDateSortValue(left.date);
+
+    if (dateDifference !== 0) {
+      return dateDifference;
+    }
+
+    if (isSamePublicationVenue(left, right)) {
+      const authorshipDifference =
+        getOwnAuthorPriority(left) - getOwnAuthorPriority(right);
+
+      if (authorshipDifference !== 0) {
+        return authorshipDifference;
+      }
+    }
+
+    return 0;
+  });
+}
+
+export function getPublicationVenueLabel(publication: Publication) {
+  if (!publication.venueFull && !publication.venueShort) {
+    return null;
+  }
+
+  if (!publication.venueFull) {
+    return publication.venueShort ?? null;
+  }
+
+  if (
+    !publication.venueShort ||
+    publication.venueFull === publication.venueShort
+  ) {
+    return publication.venueFull;
+  }
+
+  return `${publication.venueFull} (${publication.venueShort})`;
+}
+
+export function getPublicationVenuePrefix(publication: Publication) {
+  switch (publication.category) {
+    case "article":
+      return "Article:";
+    case "talk":
+      return "Event:";
+    case "preprint":
+      return "Preprint:";
+    default:
+      return "Publication:";
+  }
+}
+
+export function getPublicationDatePrefix(publication: Publication) {
+  switch (publication.category) {
+    case "preprint":
+      return "Posted:";
+    case "article":
+      return "Published:";
+    default:
+      return "Presented:";
+  }
+}
+
+export function getPublicationListVenueLabel(publication: Publication) {
+  return (
+    publication.venueShort ??
+    publication.venueFull ??
+    getPublicationCategoryLabel(publication)
+  );
+}
+
+export function publicationMatchesVenue(
+  publication: Publication,
+  venue: string,
+) {
+  return publication.venueShort === venue || publication.venueFull === venue;
+}
+
+export function getPublicationCategoryLabel(publication: Publication) {
+  switch (publication.category) {
+    case "international-conference":
+      return "International Conferences";
+    case "domestic-conference":
+      return "Domestic Conferences";
+    case "preprint":
+      return "Preprints";
+    case "article":
+      return "Articles";
+    case "talk":
+      return "Talks";
+  }
+}
+
+export function getRelatedLinks(publication: Publication): RelatedLink[] {
+  if (!publication.relatedLinks) {
+    return [];
+  }
+
+  return relatedLinkKeys.flatMap((key) => {
+    const url = publication.relatedLinks?.[key];
+
+    return url ? [{ key, label: relatedLinkText[key], url }] : [];
+  });
+}
+
+export function formatPublicationDate(date?: string) {
+  return formatYearMonthDate(date, { month: "long" });
+}
+
+export function isTalkOrArticle(publication: Publication) {
+  return publication.category === "article" || publication.category === "talk";
+}

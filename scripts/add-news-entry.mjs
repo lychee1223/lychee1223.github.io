@@ -12,7 +12,7 @@ const usage = `Usage:
 `;
 
 function escapeString(value) {
-  return value.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
+  return JSON.stringify(value).slice(1, -1);
 }
 
 function loadTypeScriptModule(filePath) {
@@ -24,10 +24,10 @@ function loadTypeScriptModule(filePath) {
     },
     fileName: filePath,
   });
-  const module = { exports: {} };
+  const loadedModule = { exports: {} };
   const context = {
-    exports: module.exports,
-    module,
+    exports: loadedModule.exports,
+    module: loadedModule,
     require(specifier) {
       throw new Error(`Unsupported import in ${filePath}: ${specifier}`);
     },
@@ -35,7 +35,7 @@ function loadTypeScriptModule(filePath) {
 
   vm.runInNewContext(transpiled.outputText, context, { filename: filePath });
 
-  return module.exports;
+  return loadedModule.exports;
 }
 
 function getExportedObject(moduleExports) {
@@ -224,8 +224,9 @@ function formatEntry(entry) {
 
 function buildEntry(args) {
   const [type, ...rest] = args;
-  const publications = loadPublications();
-  const ownAuthorName = loadOwnAuthorName();
+  if (type === "manual") {
+    return buildManualEntry(rest);
+  }
 
   if (type === "venue") {
     const venue = rest[0];
@@ -234,7 +235,7 @@ function buildEntry(args) {
       throw new Error("Venue name is required.");
     }
 
-    return buildVenueEntry(venue, publications, ownAuthorName);
+    return buildVenueEntry(venue, loadPublications(), loadOwnAuthorName());
   }
 
   if (type === "talk") {
@@ -244,11 +245,7 @@ function buildEntry(args) {
       throw new Error("Talk slug is required.");
     }
 
-    return buildTalkEntry(slug, publications);
-  }
-
-  if (type === "manual") {
-    return buildManualEntry(rest);
+    return buildTalkEntry(slug, loadPublications());
   }
 
   throw new Error(`Unknown news entry type: ${type}`);

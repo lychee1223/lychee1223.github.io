@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getPublicationListVenueLabel, Publication } from "@/data/publication";
+import {
+  getPublicationListVenueLabel,
+  type Publication,
+} from "@/lib/publications";
 import { AwardBadge } from "@/components/publications/award-badge";
 import {
   getAuthorNotes,

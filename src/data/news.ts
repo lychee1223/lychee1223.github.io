@@ -1,3 +1,5 @@
+import { getDateSortValue } from "@/utils/date";
+
 export interface NewsDetail {
   title: string;
   href: string;
@@ -7,12 +9,6 @@ export interface NewsItem {
   date: string;
   title: string;
   items: NewsDetail[];
-}
-
-function getSortValue(date: string) {
-  const normalizedDate = Number(date.replaceAll("-", ""));
-
-  return Number.isNaN(normalizedDate) ? 0 : normalizedDate;
 }
 
 export const newsItems: NewsItem[] = [
@@ -221,11 +217,13 @@ export const newsItems: NewsItem[] = [
     title: "🗣️ We presented 5 papers at YANS 2026!",
     items: [
       {
-        title: "Code2Figure: 学術論文における実装コードに基づくモデル図生成の初期検討",
+        title:
+          "Code2Figure: 学術論文における実装コードに基づくモデル図生成の初期検討",
         href: "/publications/kawada2026yans",
       },
       {
-        title: "Where Do Vision-Language Models Preserve and Use Depth Information?",
+        title:
+          "Where Do Vision-Language Models Preserve and Use Depth Information?",
         href: "/publications/chan2026yans",
       },
       {
@@ -233,7 +231,8 @@ export const newsItems: NewsItem[] = [
         href: "/publications/nishiyama2026yans",
       },
       {
-        title: "視覚言語モデルを用いた AI エージェントによる悪質サイトの検知と警告能力の評価",
+        title:
+          "視覚言語モデルを用いた AI エージェントによる悪質サイトの検知と警告能力の評価",
         href: "/publications/takeshita2026yans",
       },
       {
@@ -242,4 +241,6 @@ export const newsItems: NewsItem[] = [
       },
     ],
   },
-].sort((left, right) => getSortValue(right.date) - getSortValue(left.date));
+].sort(
+  (left, right) => getDateSortValue(right.date) - getDateSortValue(left.date),
+);

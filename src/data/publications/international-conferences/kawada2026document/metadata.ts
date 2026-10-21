@@ -2,8 +2,7 @@ import type { Publication } from "@/data/publication";
 
 export const kawada2026document: Publication = {
   slug: "kawada2026document",
-  title:
-    "Document-Grounded Coaching Agent for Video Skill Assessment",
+  title: "Document-Grounded Coaching Agent for Video Skill Assessment",
   authors: [
     { name: "Takuro Kawada" },
     { name: "Masaya Fujiwaka" },

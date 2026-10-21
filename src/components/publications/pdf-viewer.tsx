@@ -3,12 +3,19 @@
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { PdfLoadingStage } from "@/components/publications/pdf-loading-placeholder";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface PdfViewerProps {
   src: string;
   title?: string;
+}
+
+function blurActiveElement() {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
 }
 
 export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
@@ -32,15 +39,15 @@ export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
       return undefined;
     }
 
-    const updateWidth = () => {
+    const updateContainerSize = () => {
       setContainerWidth(element.clientWidth);
       setContainerHeight(element.clientHeight);
     };
 
-    updateWidth();
+    updateContainerSize();
 
     const observer = new ResizeObserver(() => {
-      updateWidth();
+      updateContainerSize();
     });
 
     observer.observe(element);
@@ -56,8 +63,8 @@ export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
 
       setIsFullscreen(fullscreenActive);
 
-      if (!fullscreenActive && document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
+      if (!fullscreenActive) {
+        blurActiveElement();
       }
     };
 
@@ -79,11 +86,6 @@ export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
 
   const isPreviousDisabled = pageNumber <= 1;
   const isNextDisabled = pageCount === 0 || pageNumber >= pageCount;
-  const blurActiveElement = () => {
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-  };
 
   const handleFullscreenToggle = async () => {
     const element = embedRef.current;
@@ -113,7 +115,7 @@ export function PdfViewer({ src, title = "PDF" }: PdfViewerProps) {
             setPageCount(numPages);
             setPageNumber((currentPage) => Math.min(currentPage, numPages));
           }}
-          loading={<p className="publication-pdf-status">Loading PDF...</p>}
+          loading={<PdfLoadingStage message="Loading PDF..." />}
           error={
             <p className="publication-pdf-status">
               PDF could not be rendered. <a href={src}>Open it directly</a>.

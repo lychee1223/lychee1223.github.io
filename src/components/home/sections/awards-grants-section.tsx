@@ -1,5 +1,5 @@
 import { AwardGrantEntry } from "@/components/awards-grants/award-grant-entry";
-import { SectionSeeAllLink } from "@/components/home/section-see-all-link";
+import { SectionListFooter } from "@/components/home/section-list-footer";
 import { SectionHeading } from "@/components/home/section-heading";
 import { awardsGrants } from "@/data/awards-grants";
 
@@ -7,7 +7,6 @@ const homepageAwardGrantLimit = 3;
 
 export function AwardsGrantsSection() {
   const homepageAwardsGrants = awardsGrants.slice(0, homepageAwardGrantLimit);
-  const hasMoreAwardsGrants = awardsGrants.length > homepageAwardsGrants.length;
 
   if (homepageAwardsGrants.length === 0) {
     return null;
@@ -21,20 +20,14 @@ export function AwardsGrantsSection() {
           <AwardGrantEntry
             key={`${item.date}-${item.title}-${index}`}
             item={item}
-            index={index}
           />
         ))}
       </div>
-      {hasMoreAwardsGrants && (
-        <div className="pt-4">
-          <div className="flex min-w-0 items-start justify-between gap-3 sm:items-center">
-            <p className="min-w-0 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
-              Latest {homepageAwardsGrants.length} of {awardsGrants.length}
-            </p>
-            <SectionSeeAllLink href="/awards-grants" />
-          </div>
-        </div>
-      )}
+      <SectionListFooter
+        shownCount={homepageAwardsGrants.length}
+        totalCount={awardsGrants.length}
+        href={"/awards-grants"}
+      />
     </section>
   );
 }

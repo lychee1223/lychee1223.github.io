@@ -9,9 +9,9 @@ import {
   getRelatedLinks,
   getPublicationVenueLabel,
   getPublicationVenuePrefix,
-  getPublicationBySlug,
-  publicationData,
-} from "@/data/publication";
+  type Publication,
+} from "@/lib/publications";
+import { getPublicationBySlug, publicationData } from "@/data/publication";
 import { getPublicationContentBySlug } from "@/data/publication-content";
 import {
   getAuthorNotes,
@@ -27,9 +27,7 @@ interface PublicationPageProps {
 
 const siteUrl = "https://lychee1223.github.io";
 
-function getPublicationDescription(
-  publication: NonNullable<ReturnType<typeof getPublicationBySlug>>,
-) {
+function getPublicationDescription(publication: Publication) {
   return (
     publication.abstract ??
     getPublicationVenueLabel(publication) ??

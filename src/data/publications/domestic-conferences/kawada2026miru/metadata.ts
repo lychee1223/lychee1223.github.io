@@ -2,7 +2,8 @@ import type { Publication } from "@/data/publication";
 
 export const kawada2026miru: Publication = {
   slug: "kawada2026miru",
-  title: "Generation and Evaluation of Editable Graphical Abstracts for Academic Papers",
+  title:
+    "Generation and Evaluation of Editable Graphical Abstracts for Academic Papers",
   authors: [
     { name: "Takuro Kawada" },
     { name: "Shunsuke Kitada" },

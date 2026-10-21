@@ -2,7 +2,8 @@ import type { Publication } from "@/data/publication";
 
 export const azegami2026miru: Publication = {
   slug: "azegami2026miru",
-  title: "DA-LoRA: 植物病害診断におけるドメイン特徴の視覚的分析のための敵対的画像生成",
+  title:
+    "DA-LoRA: 植物病害診断におけるドメイン特徴の視覚的分析のための敵対的画像生成",
   authors: [
     { name: "Tatsuki Azegami" },
     { name: "Yuji Arima" },

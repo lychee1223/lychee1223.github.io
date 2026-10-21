@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useNavigationMenu } from "./use-navigation-menu";
 import Link from "next/link";
 import { ChevronDown, ChevronRight, Menu } from "lucide-react";
 
@@ -9,286 +9,32 @@ interface NavChildItem {
   label: string;
 }
 
-interface NavItem {
-  href?: string;
-  label: string;
-  children?: NavChildItem[];
-}
+type NavItem =
+  | { label: string; href: string; children?: never }
+  | { label: string; href?: never; children: NavChildItem[] };
 
 interface SiteHeaderClientProps {
   navItems: NavItem[];
+  siteName: string;
 }
 
-export function SiteHeaderClient({ navItems }: SiteHeaderClientProps) {
-  const [isPublicationsOpen, setIsPublicationsOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileMenuSwiping, setIsMobileMenuSwiping] = useState(false);
-  const [mobileMenuSwipeOffset, setMobileMenuSwipeOffset] = useState(0);
-  const publicationsMenuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
-  const shouldSuppressNextClickRef = useRef(false);
-  const mobileMenuSwipeStartXRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    function handlePointerDown(event: MouseEvent) {
-      if (
-        publicationsMenuRef.current &&
-        !publicationsMenuRef.current.contains(event.target as Node)
-      ) {
-        setIsPublicationsOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handlePointerDown);
-
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setIsMobileMenuOpen(false);
-        setIsPublicationsOpen(false);
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  useEffect(() => {
-    function handleClick(event: MouseEvent) {
-      if (!shouldSuppressNextClickRef.current) {
-        return;
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      shouldSuppressNextClickRef.current = false;
-    }
-
-    document.addEventListener("click", handleClick, true);
-
-    return () => {
-      document.removeEventListener("click", handleClick, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) {
-      return;
-    }
-
-    function closeMobileMenuFromOutsideTap(event: PointerEvent | TouchEvent) {
-      const target = event.target;
-
-      if (
-        target instanceof Node &&
-        mobileMenuPanelRef.current?.contains(target)
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      shouldSuppressNextClickRef.current = true;
-      setIsMobileMenuOpen(false);
-
-      window.setTimeout(() => {
-        shouldSuppressNextClickRef.current = false;
-      }, 700);
-    }
-
-    const pointerOptions: AddEventListenerOptions = { capture: true };
-    const touchOptions: AddEventListenerOptions = {
-      capture: true,
-      passive: false,
-    };
-
-    document.addEventListener(
-      "pointerdown",
-      closeMobileMenuFromOutsideTap,
-      pointerOptions,
-    );
-    document.addEventListener(
-      "touchstart",
-      closeMobileMenuFromOutsideTap,
-      touchOptions,
-    );
-
-    return () => {
-      document.removeEventListener(
-        "pointerdown",
-        closeMobileMenuFromOutsideTap,
-        pointerOptions,
-      );
-      document.removeEventListener(
-        "touchstart",
-        closeMobileMenuFromOutsideTap,
-        touchOptions,
-      );
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    const finePointerQuery = window.matchMedia(
-      "(hover: hover) and (pointer: fine)",
-    );
-    let activeBadge: HTMLElement | null = null;
-    let activeStartedAt = 0;
-    let resetTimeoutId: number | null = null;
-
-    function getAwardBadge(target: EventTarget | null) {
-      if (!(target instanceof Element)) {
-        return null;
-      }
-
-      return target.closest<HTMLElement>(".award-badge");
-    }
-
-    function clearActiveBadge(delay = 0) {
-      if (resetTimeoutId) {
-        window.clearTimeout(resetTimeoutId);
-        resetTimeoutId = null;
-      }
-
-      if (delay > 0) {
-        resetTimeoutId = window.setTimeout(() => {
-          activeBadge?.classList.remove("award-badge-touch-active");
-          activeBadge = null;
-          resetTimeoutId = null;
-        }, delay);
-        return;
-      }
-
-      activeBadge?.classList.remove("award-badge-touch-active");
-      activeBadge = null;
-    }
-
-    function handleAwardBadgePointerDown(event: PointerEvent) {
-      if (finePointerQuery.matches) {
-        return;
-      }
-
-      const badge = getAwardBadge(event.target);
-
-      if (!badge) {
-        return;
-      }
-
-      clearActiveBadge();
-      activeBadge = badge;
-      activeStartedAt = window.performance.now();
-      activeBadge.classList.add("award-badge-touch-active");
-    }
-
-    function handleAwardBadgePointerEnd() {
-      if (!activeBadge) {
-        return;
-      }
-
-      const elapsed = window.performance.now() - activeStartedAt;
-      clearActiveBadge(Math.max(0, 140 - elapsed));
-    }
-
-    function handleAwardBadgeContextMenu(event: MouseEvent) {
-      if (!getAwardBadge(event.target)) {
-        return;
-      }
-
-      event.preventDefault();
-      clearActiveBadge();
-    }
-
-    document.addEventListener("pointerdown", handleAwardBadgePointerDown);
-    document.addEventListener("pointerup", handleAwardBadgePointerEnd);
-    document.addEventListener("pointercancel", handleAwardBadgePointerEnd);
-    document.addEventListener("touchend", handleAwardBadgePointerEnd);
-    document.addEventListener("touchcancel", handleAwardBadgePointerEnd);
-    document.addEventListener("contextmenu", handleAwardBadgeContextMenu);
-
-    return () => {
-      if (resetTimeoutId) {
-        window.clearTimeout(resetTimeoutId);
-      }
-
-      activeBadge?.classList.remove("award-badge-touch-active");
-      document.removeEventListener("pointerdown", handleAwardBadgePointerDown);
-      document.removeEventListener("pointerup", handleAwardBadgePointerEnd);
-      document.removeEventListener("pointercancel", handleAwardBadgePointerEnd);
-      document.removeEventListener("touchend", handleAwardBadgePointerEnd);
-      document.removeEventListener("touchcancel", handleAwardBadgePointerEnd);
-      document.removeEventListener("contextmenu", handleAwardBadgeContextMenu);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      return;
-    }
-
-    setIsMobileMenuSwiping(false);
-    setMobileMenuSwipeOffset(0);
-    mobileMenuSwipeStartXRef.current = null;
-  }, [isMobileMenuOpen]);
-
-  function handleMobileMenuTouchStart(event: React.TouchEvent<HTMLDivElement>) {
-    if (event.touches.length !== 1) {
-      return;
-    }
-
-    mobileMenuSwipeStartXRef.current = event.touches[0].clientX;
-    setIsMobileMenuSwiping(true);
-    setMobileMenuSwipeOffset(0);
-  }
-
-  function handleMobileMenuTouchMove(event: React.TouchEvent<HTMLDivElement>) {
-    if (!isMobileMenuSwiping || mobileMenuSwipeStartXRef.current === null) {
-      return;
-    }
-
-    const deltaX = event.touches[0].clientX - mobileMenuSwipeStartXRef.current;
-
-    if (deltaX <= 0) {
-      setMobileMenuSwipeOffset(0);
-      return;
-    }
-
-    setMobileMenuSwipeOffset(Math.min(deltaX, 240));
-  }
-
-  function finishMobileMenuSwipe() {
-    if (!isMobileMenuSwiping) {
-      return;
-    }
-
-    const shouldClose = mobileMenuSwipeOffset > 72;
-
-    setIsMobileMenuSwiping(false);
-    mobileMenuSwipeStartXRef.current = null;
-
-    if (shouldClose) {
-      setIsMobileMenuOpen(false);
-      return;
-    }
-
-    setMobileMenuSwipeOffset(0);
-  }
+export function SiteHeaderClient({
+  navItems,
+  siteName,
+}: SiteHeaderClientProps) {
+  const {
+    isPublicationsOpen,
+    setIsPublicationsOpen,
+    isMobileMenuOpen,
+    setIsMobileMenuOpen,
+    isMobileMenuSwiping,
+    mobileMenuSwipeOffset,
+    publicationsMenuRef,
+    mobileMenuPanelRef,
+    handleMobileMenuTouchStart,
+    handleMobileMenuTouchMove,
+    finishMobileMenuSwipe,
+  } = useNavigationMenu();
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-[color:var(--line-strong)] bg-[color:var(--page-bg)]/95 shadow-[0_14px_32px_-28px_rgba(37,99,235,0.4)] backdrop-blur">
@@ -299,7 +45,7 @@ export function SiteHeaderClient({ navItems }: SiteHeaderClientProps) {
           className="inline-flex min-w-0 flex-1 items-center text-lg text-slate-900 transition-colors duration-300 hover:text-[color:var(--accent-strong)] lg:flex-none"
         >
           <span className="block truncate font-serif text-[1.45rem] tracking-[0.04em] min-[380px]:text-[1.65rem] sm:text-[1.95rem] sm:tracking-[0.06em]">
-            Takuro Kawada
+            {siteName}
           </span>
         </Link>
 

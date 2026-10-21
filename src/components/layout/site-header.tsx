@@ -1,3 +1,4 @@
+import { aboutMe } from "@/data/aboutme";
 import { SiteHeaderClient } from "./site-header-client";
 import { preprintPublications } from "@/data/publication";
 
@@ -30,5 +31,5 @@ const navItems = [
 ];
 
 export function SiteHeader() {
-  return <SiteHeaderClient navItems={navItems} />;
+  return <SiteHeaderClient navItems={navItems} siteName={aboutMe.name} />;
 }

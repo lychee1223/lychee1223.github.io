@@ -48,21 +48,12 @@ function AwardGrantLinkButton({
   );
 }
 
-export function AwardGrantEntry({
-  item,
-  index,
-}: {
-  item: AwardGrantItem;
-  index: number;
-}) {
+export function AwardGrantEntry({ item }: { item: AwardGrantItem }) {
   const relatedLinks = getAwardGrantRelatedLinks(item);
   const receivedItems = item.receivedItems ?? [];
 
   return (
-    <article
-      key={`${item.date}-${item.title}-${index}`}
-      className="grid min-w-0 grid-cols-1 items-center gap-3 py-5 max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3"
-    >
+    <article className="grid min-w-0 grid-cols-1 items-center gap-3 py-5 max-[500px]:py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-5 sm:px-3">
       <time className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-slate-500 max-[500px]:text-[0.66rem] max-[500px]:tracking-[0.12em]">
         {formatYearMonthDate(item.date)}
       </time>

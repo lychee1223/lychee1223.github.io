@@ -1,3 +1,5 @@
+import { getDateSortValue } from "@/utils/date";
+
 export const awardGrantRelatedLinkKeys = [
   "Publication",
   "Certificate",
@@ -160,20 +162,15 @@ const awardGrantItems: AwardGrantItem[] = [
     description:
       "I received the YANS Committee Special Award in the OMD Track at the YANS 2026 Interdisciplinary Hackathon.",
     relatedLinks: {
-      Certificate: "/certificate/2026-yans-hackathon-committee-special-award.pdf",
+      Certificate:
+        "/certificate/2026-yans-hackathon-committee-special-award.pdf",
       Publication: "/publications/kawada2026yans",
     },
   },
 ];
 
-function getAwardGrantSortValue(item: AwardGrantItem) {
-  const normalizedDate = Number(item.date.replaceAll("-", ""));
-
-  return Number.isNaN(normalizedDate) ? 0 : normalizedDate;
-}
-
 export const awardsGrants = [...awardGrantItems].sort(
-  (left, right) => getAwardGrantSortValue(right) - getAwardGrantSortValue(left),
+  (left, right) => getDateSortValue(right.date) - getDateSortValue(left.date),
 );
 
 export function getAwardGrantRelatedLinks(
