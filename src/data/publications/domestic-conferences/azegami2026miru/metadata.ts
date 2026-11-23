@@ -19,6 +19,7 @@ export const azegami2026miru: Publication = {
     "Computer Vision",
     "Domain Shift",
     "Image Generation",
+    "Image Classification",
     "Plant Disease Diagnosis",
   ],
   abstract:

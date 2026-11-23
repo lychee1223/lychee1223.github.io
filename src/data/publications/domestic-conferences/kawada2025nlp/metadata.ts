@@ -19,7 +19,7 @@ export const kawada2025nlp: Publication = {
     "Natural Language Processing",
     "Computer Vision",
     "Vision & Language",
-    "Dataset",
+    "Dataset & Benchmark",
     "Image Retrieval",
     "AI for Science",
   ],

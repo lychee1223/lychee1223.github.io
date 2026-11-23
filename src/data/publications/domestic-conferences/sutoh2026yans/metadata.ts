@@ -18,6 +18,7 @@ export const sutoh2026yans: Publication = {
     "Computer Vision",
     "Natural Language Processing",
     "Vision & Language",
+    "Image Classification",
     "Plant Disease Diagnosis",
   ],
   abstract:

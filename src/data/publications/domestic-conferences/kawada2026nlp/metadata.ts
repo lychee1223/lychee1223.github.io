@@ -18,7 +18,7 @@ export const kawada2026nlp: Publication = {
     "Natural Language Processing",
     "Computer Vision",
     "Vision & Language",
-    "Dataset",
+    "Dataset & Benchmark",
     "AI for Science",
   ],
   abstract:

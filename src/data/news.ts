@@ -241,6 +241,29 @@ export const newsItems: NewsItem[] = [
       },
     ],
   },
+  {
+    date: "2026-12-12",
+    title:
+      "🎉 Our paper has been accepted to NeurIPS 2026 Workshop AI4Science!",
+    items: [
+      {
+        title:
+          "	Is Human Review Still All You Need? Measuring Quality Perception in Qualitative Figures",
+        href: "/publications/morita2026qualifi",
+      },
+    ],
+  },
+  {
+    date: "2027-01-08",
+    title: "🎉 Our paper has been accepted to ICCE 2027!",
+    items: [
+      {
+        title:
+          "HeRDA: Healthy-Reference Domain Adaptation for Plant Disease Diagnosis",
+        href: "/publications/azegami2027herda",
+      },
+    ],
+  },
 ].sort(
   (left, right) => getDateSortValue(right.date) - getDateSortValue(left.date),
 );

@@ -17,9 +17,10 @@ export const authorHomepages: Record<string, string> = {
   "Kunfan Chan": "",
   "Yutaro Tanaka": "",
   "Mizuki Sutoh": "",
+  "Andreas Dengel": "https://andreas-dengel.vercel.app/de",
   "Ko Watanabe": "https://ko-watanabe.github.io/",
   "Ryotaro Shimizu": "https://jchanxtarov.github.io/",
+  "Jianquan Liu": "https://jqliu.gitlab.io/en/index.html",
   "Masaya Fujiwaka": "",
   "Xiaotong Ji": "",
-  "Jianquan Liu": "https://www.nec.com/en/global/rd/people/jianquan_liu.html",
 };

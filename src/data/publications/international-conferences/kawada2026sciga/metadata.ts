@@ -21,7 +21,7 @@ export const kawada2026sciga: Publication = {
     "Natural Language Processing",
     "Computer Vision",
     "Vision & Language",
-    "Dataset",
+    "Dataset & Benchmark",
     "Image Retrieval",
     "AI for Science",
   ],

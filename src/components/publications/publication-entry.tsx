@@ -28,7 +28,7 @@ export function PublicationEntry({
     >
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="mb-2 flex min-w-0 flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-          <p className="max-w-full break-words text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--accent-strong)] max-[500px]:text-xs max-[500px]:tracking-[0.12em]">
+          <p className="max-w-full break-words text-sm font-medium tracking-[0.18em] text-[color:var(--accent-strong)] max-[500px]:text-xs max-[500px]:tracking-[0.12em]">
             {metaLabel}
           </p>
           {awards.length > 0 && (
